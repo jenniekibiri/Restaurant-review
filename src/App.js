@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
+import GoogleMapReact from 'google-map-react';
 import AddReviews from './components/AddReviews'
 import Reviews from './components/Reviews'
 import './css/style.css'
+ 
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 export class App extends Component {
+    static defaultProps = {
+    center: {
+      lat: 59.95,
+      lng: 30.33
+    },
+    zoom: 11
+  };
 
   render() {
     return (
@@ -19,7 +30,20 @@ export class App extends Component {
   <div className="row">
   
       <div className="col-md-8 pr-5 mt-5 np-element " > 
-    <img src={require('./assets/map.png')} class="card-img p-2  mt-5"  alt="..."/>
+      <div  style={{ height: '100vh', width: '100%' }}  class="card-img p-2  mt-5" >
+        <GoogleMapReact
+          bootstrapURLKeys={'AIzaSyDJT8SXDWcjh_VRiItERWf-x1EAtzeWllI'}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+        >
+          <AnyReactComponent
+            lat={59.955413}
+            lng={30.337844}
+            text={<i className="material-icons text-danger">place</i>}
+          />
+           
+        </GoogleMapReact>
+      </div>
   </div>
 
 <div className="col-md-4 mt-5 np-element ">
@@ -35,7 +59,7 @@ export class App extends Component {
     <div class="col-md-8">
       <div class="card-body">
         <h5>White Rhino Hotel</h5>
-        <div className=" row ml-2  text-warning"  >
+        <div className=" row ml-2  text-warning "  >
         
          <p className="text-white" style={{fontSize: "15px"}}>4.7</p>  
   

@@ -17,3 +17,19 @@ body {
 
     background-color:#e3f2fd;
 }
+.add-reviews{
+    font-size: smaller;
+    background-color: #4a0072;
+}
+ .reviews{
+    
+    background-color: #4a0072;
+    height: 37px;
+    text-align: center;
+ }
+.send-btn{
+   background-color: #4a0072;
+   font-size: smaller;
+
+   
+}

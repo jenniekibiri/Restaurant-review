@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-
+import '../css/style.css'
 export class AddReviews extends Component {
     render() {
         return (
             <div>
-                  <span  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className=" np-element ">add review</span>
+                  <span  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="add-reviews np-colorize np-element " >Add review</span>
                    <div class="dropdown-menu card-body  np-shadow-inverse  mr-3" style={{width: "16rem",
                        position: 'absolute',
                         height: '290px',
@@ -30,9 +30,9 @@ export class AddReviews extends Component {
             <textarea class="form-control" id="message-text"></textarea>
           </div>
         </form>
-            <div class="row  modal-footer">
-        <button type="button" class="btn  np-element np-shadow bg-danger np-bg-warn text-white" data-dismiss="modal ">Close</button>
-        <button type="button" class="btn  np-element np-shadow  bg-success  text-white ">Send review</button>
+            <div class="">
+
+        <button type="button" class=" ml-5 np-colorize  np-element np-shadow send-btn  text-white ">Send review</button>
       </div>
       </div>
    

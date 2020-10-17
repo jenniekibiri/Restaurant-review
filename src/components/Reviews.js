@@ -7,7 +7,7 @@ export class Reviews extends Component {
             <div>
                  <div class="dropdown  ">
         <i  type="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  className="material-icons np-element mr-2">expand_more</i> 
+                  className="material-icons np-colorize np-element mr-2 reviews">expand_more</i> 
   
  <div class="dropdown-menu  card-body np-shadow-inverse  " style={{width: "16rem"}}   aria-labelledby="dropdownMenuButton">
  
