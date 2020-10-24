@@ -5,34 +5,32 @@ export class AddReviews extends Component {
         return (
             <div>
                   <span  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="add-reviews np-colorize np-element " >Add review</span>
-                   <div class="dropdown-menu card-body  np-shadow-inverse  mr-3" style={{width: "16rem",
+                   <div className="dropdown-menu card-body  np-shadow-inverse  mr-3" style={{width: "16rem",
                        position: 'absolute',
                         height: '290px',
                         overflow:'scroll'
-          
-
-        
+         
 
           }} aria-labelledby="dropdownMenuButton1">
  
-     <div class=" ">
+     <div className=" ">
         <form >
-          <div class="form-group">
+          <div className="form-group">
            
-            <input type="text" class="form-control " placeholder="full name" id="recipient-name"/>
+            <input type="text" className="form-control " placeholder="full name" id="recipient-name"/>
           </div>
-           <div class="form-group ">
+           <div className="form-group ">
             
-            <input type="text" class="form-control" placeholder="email" id="recipient-name"/>
+            <input type="text" className="form-control" placeholder="email" id="recipient-name"/>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             
-            <textarea class="form-control" id="message-text"></textarea>
+            <textarea className="form-control" id="message-text"></textarea>
           </div>
         </form>
-            <div class="">
+            <div className="">
 
-        <button type="button" class=" ml-5 np-colorize  np-element np-shadow send-btn  text-white ">Send review</button>
+        <button type="button" className=" ml-5 np-colorize  np-element np-shadow send-btn  text-white ">Send review</button>
       </div>
       </div>
    

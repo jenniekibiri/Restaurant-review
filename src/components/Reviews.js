@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import {  Element,animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import {  Element} from 'react-scroll'
 import '../css/style.css'
 export class Reviews extends Component {
     render() {
         return (
             <div>
-                 <div class="dropdown  ">
+                 <div className="dropdown  ">
         <i  type="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                   className="material-icons np-colorize np-element mr-2 reviews">expand_more</i> 
   
- <div class="dropdown-menu  card-body np-shadow-inverse  " style={{width: "16rem"}}   aria-labelledby="dropdownMenuButton">
+ <div className="dropdown-menu  card-body np-shadow-inverse  " style={{width: "16rem"}}   aria-labelledby="dropdownMenuButton">
  
         <Element name="test7" className="element" id="containerElement" style={{
           position: 'relative',
@@ -21,7 +21,7 @@ export class Reviews extends Component {
       <div className="row">
 
      <div className="col-md-4">
-  <img src={require('../assets/71217457.webp')} height="50px" width="50px" class=" img-fluid rounded-circle" alt="..."/>
+  <img src={require('../assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
    </div>
 
      <div className="col-md-8">
@@ -54,7 +54,7 @@ It's a real friendly place to be around Mt Kenya
       <div className="row">
 
      <div className="col-md-4">
-  <img src={require('../assets/71217457.webp')} height="50px" width="50px" class=" img-fluid rounded-circle" alt="..."/>
+  <img src={require('../assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
    </div>
 
      <div className="col-md-8">
@@ -87,7 +87,7 @@ It's a real friendly place to be around Mt Kenya
       <div className="row">
 
      <div className="col-md-4">
-  <img src={require('../assets/71217457.webp')} height="50px" width="50px" class=" img-fluid rounded-circle" alt="..."/>
+  <img src={require('../assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
    </div>
 
      <div className="col-md-8">
@@ -119,7 +119,7 @@ It's a real friendly place to be around Mt Kenya
       <div className="row">
 
      <div className="col-md-4">
-  <img src={require('../assets/71217457.webp')} height="50px" width="50px" class=" img-fluid rounded-circle" alt="..."/>
+  <img src={require('../assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
    </div>
 
      <div className="col-md-8">
