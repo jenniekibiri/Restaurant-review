@@ -29,7 +29,7 @@ export class App extends Component {
 
   <div className="row">
   
-      <div className="col-md-8 pr-5 mt-5 np-element " > 
+      <div className="col-md-8 pr-3 mt-4 pl-4 np-element " > 
       <div  style={{ height: '100vh', width: '100%' }}  className="card-img p-2  mt-5" >
         <GoogleMapReact
           bootstrapURLKeys={process.env.MAPKEY}
@@ -46,7 +46,7 @@ export class App extends Component {
       </div>
   </div>
 
-<div className="col-md-4 mt-5 np-element ">
+<div className="col-md-4 mt-4  np-element ">
 
     <div className="row mt-5">
 
