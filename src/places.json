@@ -1,0 +1,93 @@
+[
+   {
+       "id":1,
+      "restaurantName":"Bronco",
+      "address":"39 Rue des Petites Écuries, 75010 Paris",
+      "photo": "https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+       "lat":-1.2856,
+      "long":36.877856,
+      "ratings":[
+         {
+            "stars":4,
+            "comment":"Great! But not many veggie options."
+         },
+         {
+            "stars":5,
+            "comment":"My favorite restaurant!"
+         }
+      ]
+   },
+   {
+       "id":2,
+      "restaurantName":"Babalou",
+      "address":"4 Rue Lamarck, 75018 Paris",
+      "photo": "https://images.pexels.com/photos/2260827/pexels-photo-2260827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+       "lat":-1.249056,
+      "long":36.877856,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+     {
+       "id":3,
+      "restaurantName":"Hero",
+      "address":"4 Rue Lamarck, 75018 Paris",
+      "photo": "https://images.pexels.com/photos/2434627/pexels-photo-2434627.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "lat":-1.2747052,
+      "long":36.866856,
+       
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+     {
+       "id":4,
+      "restaurantName":"marine hotel",
+      "address":"4 Rue Lamarck, 75018 Paris",
+       "photo": "https://images.pexels.com/photos/1383776/pexels-photo-1383776.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "lat":-1.2885056,
+      "long":36.8377856,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+     {
+       "id":5,
+      "restaurantName":"another hotel",
+      "address":"4 Rue Lamarck, 75018 Paris",
+       "photo": "https://images.pexels.com/photos/1322184/pexels-photo-1322184.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+     "lat": -1.2845056,
+       "long": 36.817786,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   }
+]
