@@ -3,6 +3,7 @@ import {  Element} from 'react-scroll'
 import places from '../places.json'
 import '../css/style.css'
 export class Reviews extends Component {
+  // pass props the id
     render() {
         return (
             <div>
@@ -21,7 +22,7 @@ export class Reviews extends Component {
         }}>
 
             {places.map((place, i) => { 
-              
+              // check condtion id
                 return(
      <div>
 

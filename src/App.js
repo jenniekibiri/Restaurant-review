@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {  Element} from 'react-scroll'
 import AddReviews from './components/AddReviews'
 import Reviews from './components/Reviews'
 import Map from './components/Map'
@@ -8,7 +9,41 @@ import Navbar from "./components/Navbar";
 require('dotenv').config();
 
 export class App extends Component {
+  constructor(props){
+    super(props)
+    //state
+    this.state={
+      places,
+      name:'',
+      email:'',
+      comment:''
+    }
+    // ?why bind this
+   
+    this.handleChange=this.handleChange.bind(this)
+    this.handleSubmit=this.handleSubmit.bind(this)
+  }
+
+ //handle change
+  handleChange(e){
+    this.setState({
+      //handle events for all fields
+      [e.target.name]:e.target.value
+    })
+  }
+  //handle submit
+handleSubmit(e){
+  e.preventDefault();
+    const { name, email,comment } = this.state;
+  localStorage.setItem('name', name);
+  localStorage.setItem('email', email);
+    localStorage.setItem('comment', comment );
+  console.log('submit')
+
+}
   render() {
+console.log(this.state.places)
+
     return (
      <div>
          
@@ -26,12 +61,15 @@ export class App extends Component {
 
 {/* card */}
 
+  <Element name="test7" className="element" id="containerElement" style={{
+          position: 'relative',
+          height: '660px',
+          overflow: 'scroll',
+          marginBottom: '0px'
+        }}>
+ {
+  this.state.places.map((place,i) =>
 
-
-  {places.map((place, i) => { 
-  return(
-
-  
      <div className=" mb-3 np-element np-shadow-double" style={{width: "25rem"}}>
   <div className="row no-gutters">
     <div className="col-md-4" key={i}>
@@ -56,11 +94,8 @@ export class App extends Component {
 
    <div className="row mt-3">
         
-<Reviews/>
-
- 
-
-    <AddReviews/>     
+<Reviews />
+<AddReviews handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>     
            
    </div>
 
@@ -68,9 +103,13 @@ export class App extends Component {
     </div>
   </div>
 </div>
-)
 
-  })}
+
+  )}
+</Element>
+  {/* {places.map((place, i) =>  */}
+ 
+ 
 
 {/* end of card */}
 </div>

@@ -27,7 +27,9 @@ const [selected,setSelected ] = useState({});
     setSelected(place);
    
   }
-
+let addMarker=(e)=>{
+  console.log('map clicked')
+}
   const success = (position) => {
     let currentPosition = {
       lat: position.coords.latitude,
@@ -37,7 +39,7 @@ const [selected,setSelected ] = useState({});
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success);
+    navigator.geolocation.watchPosition(success)
   });
 
   
@@ -52,11 +54,14 @@ const [selected,setSelected ] = useState({});
   {/* maps goes here */}
 
      <LoadScript
-       googleMapsApiKey={process.env.REACT_APP_GoogleMapsApiKey}>
+       googleMapsApiKey={process.env.REACT_APP_GoogleMapsApiKey}
+        onClick={addMarker()}>
       <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={13}
-          center={defaultCenter}>
+          center={defaultCenter}
+         
+          >
          {
             places.map(place => {
               return (
