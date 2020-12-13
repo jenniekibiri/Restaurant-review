@@ -21,10 +21,10 @@ export class Reviews extends Component {
           marginBottom: '0px'
         }}>
 
-            {places.map((place, i) => { 
-              // check condtion id
+       
+              {/* // check condtion id */}
                 return(
-     <div>
+     <div >
 
       <div className="row">
 
@@ -37,9 +37,14 @@ export class Reviews extends Component {
  
    </div>
   </div>
-   
-  
-      <div className="text-warning"> 
+   { this.props.place.ratings.map((rating,i)=>{
+     console.log(rating.comment)
+      return(
+       
+         <div key={i}>
+
+
+  <div className="text-warning"> 
          <span className="material-icons" style={{fontSize: "18px"}}>star</span>
  <span className="material-icons" style={{fontSize: "18px"}}>star</span>
 <span className="material-icons" style={{fontSize: "18px"}}>star</span>
@@ -48,16 +53,20 @@ export class Reviews extends Component {
  <span className="text-white text-muted "style={{fontSize: "15px"}}>(4.5)</span>
       </div>
 
-      <p style={{fontSize: "15px"}} className="text-muted">{
-       
-      place.ratings[0].comment
-      
-      }
-</p>
+      <p style={{fontSize: "15px"}} className="text-muted">
+        {rating.comment}</p>
+
+
+         </div>
+       )
+  
+
+       })}
+
     </div>
                   
                 )
-              })}
+           
    
     
 

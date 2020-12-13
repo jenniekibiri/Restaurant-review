@@ -38,11 +38,10 @@ handleSubmit(e){
   localStorage.setItem('name', name);
   localStorage.setItem('email', email);
     localStorage.setItem('comment', comment );
-  console.log('submit')
+  // console.log('submit')
 
 }
   render() {
-console.log(this.state.places)
 
     return (
      <div>
@@ -63,20 +62,20 @@ console.log(this.state.places)
 
   <Element name="test7" className="element" id="containerElement" style={{
           position: 'relative',
-          height: '660px',
+          height: '650px',
           overflow: 'scroll',
           marginBottom: '0px'
         }}>
  {
   this.state.places.map((place,i) =>
 
-     <div className=" mb-3 np-element np-shadow-double" style={{width: "25rem"}}>
+     <div className=" mb-3 np-element np-shadow-double" key={i} style={{width: "25rem"}}>
   <div className="row no-gutters">
-    <div className="col-md-4" key={i}>
+    <div className="col-md-4" >
       <img src={place.photo}className=" np-img-wrapper card-img np-img-expand" alt="..."/>
     </div>
     <div className="col-md-8">
-      <div className="card-body" key={i}>
+      <div className="card-body" >
 <h5>{place.restaurantName}</h5>
         <div className=" row ml-2  text-warning "  >
         
@@ -93,8 +92,70 @@ console.log(this.state.places)
 <span className="mb-4 ml-2" key={i}  style={{fontSize: "15px"}}>{place.address} </span>
 
    <div className="row mt-3">
-        
-<Reviews />
+ <div className="dropdown">
+        <i  type="button"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                  className="material-icons np-colorize np-element mr-2 reviews">expand_more</i> 
+  
+ <div className="dropdown-menu  card-body np-shadow-inverse  " style={{width: "16rem"}}   aria-labelledby="dropdownMenuButton">
+ 
+        <Element name="test7" className="element" id="containerElement" style={{
+          position: 'relative',
+          height: '250px',
+          overflow: 'scroll',
+          marginBottom: '0px'
+        }}>
+              {/* // check condtion id */}
+                
+     <div >
+
+      <div className="row">
+
+     <div className="col-md-4">
+  <img src={require('./assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
+   </div>
+
+     <div className="col-md-8">
+ <p className="font-weight-lighter" style={{fontSize: "15px"}}>jenny kibiri</p>
+ 
+   </div>
+  </div>
+   { place.ratings.map((rating,i)=>{
+     console.log(rating.comment)
+      return(
+       
+         <div key={i}>
+
+
+  <div className="text-warning"> 
+         <span className="material-icons" style={{fontSize: "18px"}}>star</span>
+ <span className="material-icons" style={{fontSize: "18px"}}>star</span>
+<span className="material-icons" style={{fontSize: "18px"}}>star</span>
+<span className="material-icons" style={{fontSize: "18px"}}>star</span>
+ <span className="material-icons" style={{fontSize: "18px"}}>star_half</span>
+ <span className="text-white text-muted "style={{fontSize: "15px"}}>(4.5)</span>
+      </div>
+
+      <p style={{fontSize: "15px"}} className="text-muted">
+        {rating.comment}</p>
+
+
+         </div>
+       )
+  
+
+       })}
+
+    </div>
+                  
+                
+           
+   
+    
+
+          </Element>
+  </div>
+
+</div> 
 <AddReviews handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>     
            
    </div>

@@ -28,7 +28,7 @@ const [selected,setSelected ] = useState({});
    
   }
 let addMarker=(e)=>{
-  console.log('map clicked')
+  // console.log('map clicked')
 }
   const success = (position) => {
     let currentPosition = {
@@ -63,9 +63,9 @@ let addMarker=(e)=>{
          
           >
          {
-            places.map(place => {
+            places.map((place,i )=> {
               return (
-                <div>
+                <div key={i} >
                     <Marker
                 title={"The marker`s title will appear as a tooltip."}
                 name={"SOMA"}
@@ -101,13 +101,7 @@ let addMarker=(e)=>{
      </LoadScript>
   </div>
  
-      </div>
-  
-
-
-
-
-         
+      </div>  
     )
   
 }
