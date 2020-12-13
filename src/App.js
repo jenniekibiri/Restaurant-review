@@ -13,7 +13,8 @@ export class App extends Component {
     super(props)
     //state
     this.state={
-      places,
+      places:[],
+      rating:[],
       name:'',
       email:'',
       comment:''
@@ -34,13 +35,29 @@ export class App extends Component {
   //handle submit
 handleSubmit(e){
   e.preventDefault();
-    const { name, email,comment } = this.state;
-  localStorage.setItem('name', name);
-  localStorage.setItem('email', email);
-    localStorage.setItem('comment', comment );
+    const { name, email,comment,places,rating } = this.state;
+  // localStorage.setItem('name', name);
+  // localStorage.setItem('email', email);
+  //   localStorage.setItem('comment', comment );
+
+  console.log(places)
+  console.log(places.id)
+  console.log(rating)
+
+ this.setState({
+rating:rating.push({name,email,comment})
+
+ })
   // console.log('submit')
 
 }
+
+   componentDidMount() {
+        this.setState({
+            places: places
+        })
+    }
+   
   render() {
 
     return (
@@ -108,24 +125,26 @@ handleSubmit(e){
                 
      <div >
 
-      <div className="row">
+   
+   { place.ratings.map((rating,i)=>{
+    
+      return(
+       
+
+
+         <div key={i}>
+
+   <div className="row">
 
      <div className="col-md-4">
   <img src={require('./assets/71217457.webp')} height="50px" width="50px" className=" img-fluid rounded-circle" alt="..."/>
    </div>
 
      <div className="col-md-8">
- <p className="font-weight-lighter" style={{fontSize: "15px"}}>jenny kibiri</p>
+ <p className="font-weight-lighter" style={{fontSize: "15px"}}>{rating.name}</p>
  
    </div>
   </div>
-   { place.ratings.map((rating,i)=>{
-     console.log(rating.comment)
-      return(
-       
-         <div key={i}>
-
-
   <div className="text-warning"> 
          <span className="material-icons" style={{fontSize: "18px"}}>star</span>
  <span className="material-icons" style={{fontSize: "18px"}}>star</span>

@@ -8,10 +8,12 @@
       "long":36.877856,
       "ratings":[
          {
+             "name":"belle",
             "stars":4,
             "comment":"Great! But not many veggie options."
          },
          {
+             "name":"tess",
             "stars":5,
             "comment":"My favorite restaurant!"
          }
@@ -26,10 +28,12 @@
       "long":36.877856,
       "ratings":[
          {
+               "name":"jeny kibiri",
             "stars":5,
             "comment":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
+             "name":"jen ",
             "stars":3,
             "comment":"Meh, it was fine."
          }
@@ -45,10 +49,12 @@
        
       "ratings":[
          {
+             "name":"sophie",
             "stars":5,
             "comment":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
+             "name":"terry",
             "stars":3,
             "comment":"Meh, it was fine."
          }
@@ -63,10 +69,12 @@
       "long":36.8377856,
       "ratings":[
          {
+             "name":"zippy",
             "stars":5,
             "comment":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
+             "name":"charles",
             "stars":3,
             "comment":"Meh, it was fine."
          }
@@ -81,10 +89,12 @@
        "long": 36.817786,
       "ratings":[
          {
+             "name":"josphat",
             "stars":5,
             "comment":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
+             "name":"mary",
             "stars":3,
             "comment":"Meh, it was fine."
          }
