@@ -33,7 +33,7 @@ export class AddReviews extends Component {
     render() {
         return (
             <div>
-                  <span  type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="add-reviews np-colorize np-element " >Add review</span>
+                  <span  type="button" onClick={this.props.getRestaurantId} id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="add-reviews np-colorize np-element " >Add review</span>
                    <div className="dropdown-menu card-body  np-shadow-inverse  mr-3" style={{width: "16rem",
                        position: 'absolute',
                         height: '290px',
@@ -42,7 +42,7 @@ export class AddReviews extends Component {
 
           }} aria-labelledby="dropdownMenuButton1">
  
-     <div className=" ">
+     <div>
         <form onSubmit={this.props.handleSubmit}>
           <div className="form-group">
            
