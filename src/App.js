@@ -170,7 +170,7 @@ export class App extends Component {
                                         <div key={i}>
                                           <div className="row">
                                             <div className="pl-3" >
-                                             <Avatar name={rating.name} size="40" round="50px" />
+                                             <Avatar color={Avatar.getRandomColor( ['red', 'green'])} name={rating.name} size="40" round="50px" />
                                            <span
                                                 className="font-weight-lighter ml-2"
                                                 style={{ fontSize: "15px" }}
