@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import StarRatings from "react-star-ratings";
 import { Element } from "react-scroll";
+import ShowRatings from "./components/ShowRatings";
 import AddReviews from "./components/AddReviews";
 import Reviews from "./components/Reviews";
 import Map from "./components/Map";
@@ -18,16 +20,16 @@ export class App extends Component {
       email: "",
       stars: 0,
       comment: "",
-      restaurantId:0
+      restaurantId: 0,
     };
     // ?why bind this
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getRestaurantId = this.getRestaurantId.bind(this);
+    this.AverageStars = this.AverageStars.bind(this);
   }
   //onclick
-
 
   //handle change
   handleChange(e) {
@@ -39,47 +41,42 @@ export class App extends Component {
   //handle submit
   handleSubmit(e) {
     e.preventDefault();
-    const { name, email, comment, stars,places,restaurantId} = this.state;
-    // localStorage.setItem('name', name);
-    // localStorage.setItem('email', email);
-    //   localStorage.setItem('comment', comment );
-    console.log(restaurantId)
-     places.map(place=>{
-     if(restaurantId == place.id){
-      place.ratings.push({name,stars,comment})
-
-     }
-
- 
-     console.log(places)
-
-
-    })
-
+    const { name, comment, stars, places, restaurantId } = this.state;
+    places.map((place) => {
+      if (restaurantId == place.id) {
+        place.ratings.push({ name, stars, comment });
+      }
+    });
 
     this.setState({
-        places:places,
-        name:'',
-        email:'',
-        comment:'',
-        stars:''
+      places: places,
+      name: "",
+      email: "",
+      comment: "",
+      stars:0
+    });
+  }
 
-
-      })
+  getRestaurantId(e) {
+    let id = e.target.id;
+    this.setState((state) => ({
+      restaurantId: id,
+    }));
+  }
+  AverageStars(){
+  let {places}=this.state
+  places.map(place=>{
+    console.log(place)
+  })
   }
   
-
- getRestaurantId(e) {
-     let id= e.target.id;
-    this.setState(state => ({
-     restaurantId:id
-    }));
-
-  }
   componentDidMount() {
+  
     this.setState({
       places: places,
     });
+
+
   }
 
   render() {
@@ -233,37 +230,13 @@ export class App extends Component {
                                             </div>
                                           </div>
                                           <div className="text-warning">
-                                            <span
-                                              className="material-icons"
-                                              style={{ fontSize: "18px" }}
-                                            >
-                                              star
-                                            </span>
-
-                                            <span
-                                              className="material-icons"
-                                              style={{ fontSize: "18px" }}
-                                            >
-                                              star
-                                            </span>
-                                            <span
-                                              className="material-icons"
-                                              style={{ fontSize: "18px" }}
-                                            >
-                                              star
-                                            </span>
-                                            <span
-                                              className="material-icons"
-                                              style={{ fontSize: "18px" }}
-                                            >
-                                              star
-                                            </span>
-                                            <span
-                                              className="material-icons"
-                                              style={{ fontSize: "18px" }}
-                                            >
-                                              star_half
-                                            </span>
+                                            <StarRatings
+                                              starRatedColor="yellow"
+                                              rating={Number(rating.stars)}
+                                              starDimension="20px"
+                                              starSpacing="1px"
+                                              name="rating"
+                                            />
                                           </div>
 
                                           <p
@@ -335,7 +308,8 @@ export class App extends Component {
                                         name="stars"
                                         placeholder="1"
                                         id="recipient-name"
-                                        min="1" max="5"
+                                        min="1"
+                                        max="5"
                                       />
                                     </div>
 
