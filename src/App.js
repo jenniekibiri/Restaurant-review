@@ -123,49 +123,7 @@ export class App extends Component {
                         <div className="card-body">
                           <h5 ref="restaurantName">{place.restaurantName}</h5>
                           <div className=" row ml-2  text-warning ">
-                            <p
-                              className="text-white"
-                              style={{ fontSize: "15px" }}
-                            >
-                              4.7
-                            </p>
-
-                            <span
-                              className="material-icons"
-                              style={{ fontSize: "18px" }}
-                            >
-                              star
-                            </span>
-                            <span
-                              className="material-icons"
-                              style={{ fontSize: "18px" }}
-                            >
-                              star
-                            </span>
-                            <span
-                              className="material-icons"
-                              style={{ fontSize: "18px" }}
-                            >
-                              star
-                            </span>
-                            <span
-                              className="material-icons"
-                              style={{ fontSize: "18px" }}
-                            >
-                              star
-                            </span>
-                            <span
-                              className="material-icons"
-                              style={{ fontSize: "18px" }}
-                            >
-                              star_half
-                            </span>
-                            <span
-                              className="text-white text-muted "
-                              style={{ fontSize: "15px" }}
-                            >
-                              (250)
-                            </span>
+                           
                           </div>
                           <span
                             className="mb-4 ml-2"
