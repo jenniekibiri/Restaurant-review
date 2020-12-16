@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import StarRatings from "react-star-ratings";
+import Avatar from 'react-avatar';
 import { Element } from "react-scroll";
 import ShowRatings from "./components/ShowRatings";
 import AddReviews from "./components/AddReviews";
@@ -168,24 +169,17 @@ export class App extends Component {
                                       return (
                                         <div key={i}>
                                           <div className="row">
-                                            <div className="col-md-4">
-                                              <img
-                                                src={require("./assets/71217457.webp")}
-                                                height="50px"
-                                                width="50px"
-                                                className=" img-fluid rounded-circle"
-                                                alt="..."
-                                              />
-                                            </div>
-
-                                            <div className="col-md-8">
-                                              <p
-                                                className="font-weight-lighter"
+                                            <div className="pl-3" >
+                                             <Avatar name={rating.name} size="40" round="50px" />
+                                           <span
+                                                className="font-weight-lighter ml-2"
                                                 style={{ fontSize: "15px" }}
                                               >
                                                 {rating.name}
-                                              </p>
+                                              </span>  
                                             </div>
+
+                                          
                                           </div>
                                           <div className="text-warning">
                                             <StarRatings
