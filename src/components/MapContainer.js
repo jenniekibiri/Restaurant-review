@@ -21,6 +21,8 @@ export class MapContainer extends Component {
     showingInfoWindow: false, 
     activeMarker: {}, 
     selectedPlace: {}, 
+    mapCenter:mapCenter,
+    currentPosition:{}
   };
   onMarkerClick = (props, marker) =>{
  
@@ -38,7 +40,21 @@ export class MapContainer extends Component {
       });
     }
   };
+    componentDidMount() {
+      
+   navigator.geolocation.getCurrentPosition((position)=> {
+ this.setState({
+   currentPosition:{
+     lat:position.coords.latitude,
+     lng:position.coords.longitude
+   }
+ })
+    });
+ 
+ 
+  }
   render() {
+    console.log(this.state.currentPosition)
     return (
       <div
         style={{ height: "10vh", width: "100%" }}
@@ -48,9 +64,15 @@ export class MapContainer extends Component {
           google={this.props.google}
           style={mapStyles}
           zoom={13}
-          initialCenter={mapCenter}
+          initialCenter={this.state.mapCenter}
           onClick={this.onMapClicked}
         >
+            <Marker
+             
+              name={"current location"}
+              onClick={this.onMarkerClick}
+            position={this.state.currentPosition}
+            />
           {places.map((place,i) => (
             <Marker
               key={i}
@@ -58,7 +80,9 @@ export class MapContainer extends Component {
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
             />
+            
           ))}
+
          {
            this.state.activeMarker&&(
               <InfoWindow
