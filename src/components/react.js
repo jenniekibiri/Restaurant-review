@@ -27,9 +27,7 @@ const [selected,setSelected ] = useState({});
     setSelected(place);
    
   }
-let addMarker=(e)=>{
-  // console.log('map clicked')
-}
+
   const success = (position) => {
     let currentPosition = {
       lat: position.coords.latitude,
@@ -55,10 +53,12 @@ let addMarker=(e)=>{
 
      <LoadScript
        googleMapsApiKey={process.env.REACT_APP_GoogleMapsApiKey}
-        onClick={addMarker()}>
+       
+        >
       <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={13}
+         
           center={defaultCenter}
          
           >
@@ -77,6 +77,7 @@ let addMarker=(e)=>{
                <Marker key={place.name} position={{lat:place.lat,lng:place.long}}
                  onClick={() => onSelect(place)}
                />
+            
                 </div>
              
               )

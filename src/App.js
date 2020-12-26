@@ -5,7 +5,7 @@ import { Element } from "react-scroll";
 import ShowRatings from "./components/ShowRatings";
 import AddReviews from "./components/AddReviews";
 import Reviews from "./components/Reviews";
-import Map from "./components/Map";
+import MapContainer from "./components/MapContainer";
 import "./css/style.css";
 import places from "./places.json";
 import Navbar from "./components/Navbar";
@@ -87,7 +87,7 @@ export class App extends Component {
 
         <div className="row">
           <div className="col-md-8 pr-3 mt-4 pl-4 np-element ">
-            <Map />
+            <MapContainer />
           </div>
 
           <div className="col-md-4 mt-4   np-element ">
