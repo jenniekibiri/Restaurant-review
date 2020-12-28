@@ -23,6 +23,7 @@ export class MapContainer extends Component {
       mapCenter: mapCenter,
       currentPosition: {},
       locations: {},
+      location: [],
     };
   }
   onMarkerClick = (props, marker) => {
@@ -32,22 +33,25 @@ export class MapContainer extends Component {
       showingInfoWindow: true,
     });
   };
+
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
-      console.log(e.latLng);
-      if (this.state.showingInfoWindow) {
+    
+      const { location, locations } = this.state;
+          if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
           activeMarker: null,
         });
       }
 
-      this.setState({
+      this.setState((prevState) => ({
+        
         locations: {
           lat: e.latLng.lat(),
           lng: e.latLng.lng(),
         },
-      });
+      }));
       map.panTo(Location);
     };
     navigator.geolocation.getCurrentPosition((position) => {
@@ -60,7 +64,8 @@ export class MapContainer extends Component {
     });
   }
   render() {
-    console.log(this.state.locations.lat);
+    
+
     return (
       <div
         style={{ height: "10vh", width: "100%" }}

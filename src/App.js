@@ -5,6 +5,8 @@ import { Element } from "react-scroll";
 import ShowRatings from "./components/ShowRatings";
 import AddReviews from "./components/AddReviews";
 import Reviews from "./components/Reviews";
+import Form from './components/Form';
+import Ratings from './components/Ratings'
 import MapContainer from "./components/MapContainer";
 import "./css/style.css";
 import places from "./places.json";
@@ -165,42 +167,9 @@ export class App extends Component {
                                   {/* // check condtion id */}
 
                                   <div>
-                                    {place.ratings.map((rating, i) => {
-                                      return (
-                                        <div key={i}>
-                                          <div className="row">
-                                            <div className="pl-3" >
-                                             <Avatar color={Avatar.getRandomColor( ['red', 'green'])} name={rating.name} size="40" round="50px" />
-                                           <span
-                                                className="font-weight-lighter ml-2"
-                                                style={{ fontSize: "15px" }}
-                                              >
-                                                {rating.name}
-                                              </span>  
-                                            </div>
-
-                                          
-                                          </div>
-                                          <div className="text-warning">
-                                            <StarRatings
-                                              starRatedColor="yellow"
-                                              rating={Number(rating.stars)}
-                                              starDimension="20px"
-                                              starSpacing="1px"
-                                              name="rating"
-                                            />
-                                          </div>
-
-                                          <p
-                                            style={{ fontSize: "15px" }}
-                                            className="text-muted"
-                                            id={place.id}
-                                          >
-                                            {rating.comment}
-                                          </p>
-                                        </div>
-                                      );
-                                    })}
+                                   
+                                      <Ratings  place={place} />
+                                    
                                   </div>
                                 </Element>
                               </div>
@@ -227,63 +196,17 @@ export class App extends Component {
                                 }}
                                 aria-labelledby="dropdownMenuButton1"
                               >
-                                <div>
-                                  <form onSubmit={this.handleSubmit}>
-                                    <div className="form-group">
-                                      <input
-                                        onChange={this.handleChange}
-                                        value={this.state.name}
-                                        type="text"
-                                        className="form-control"
-                                        name="name"
-                                        placeholder="full name"
-                                        id="recipient-name"
-                                      />
-                                    </div>
-                                    <div className="form-group ">
-                                      <input
-                                        onChange={this.handleChange}
-                                        value={this.state.email}
-                                        type="text"
-                                        className="form-control"
-                                        name="email"
-                                        placeholder="email"
-                                        id="recipient-name"
-                                      />
-                                    </div>
-                                    <div className="form-group ">
-                                      <input
-                                        onChange={this.handleChange}
-                                        value={this.state.rating}
-                                        type="number"
-                                        className="form-control"
-                                        name="stars"
-                                        placeholder="1"
-                                        id="recipient-name"
-                                        min="1"
-                                        max="5"
-                                      />
-                                    </div>
+                                <Form 
+                                name ={this.state.name}
+                                email={this.state.name}
+                                 stars ={this.state.stars}
+                                comment={this.state.comment}
+                                handleChange={this.handleChange}
+                                handleSubmit={this.handleSubmit}
+                                
+                                  />
 
-                                    <div className="form-group">
-                                      <textarea
-                                        onChange={this.handleChange}
-                                        value={this.state.comment}
-                                        className="form-control"
-                                        name="comment"
-                                        id="message-text"
-                                      ></textarea>
-                                    </div>
-                                    <div className="form-group">
-                                      <button
-                                        type="submit"
-                                        className=" ml-5 np-colorize  np-element np-shadow send-btn  text-white "
-                                      >
-                                        Send review
-                                      </button>
-                                    </div>
-                                  </form>
-                                </div>
+                               
                               </div>
                             </div>
                           </div>
