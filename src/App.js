@@ -293,7 +293,7 @@ export class App extends Component {
                   </div>
                 ))}
               </Element>
-              {/* {places.map((place, i) =>  */}
+            
 
               {/* end of card */}
             </div>

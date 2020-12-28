@@ -9,19 +9,22 @@ const mapCenter = {
   lng: 36.817786,
 };
 
-
 const mapStyles = {
   height: "100vh",
   width: "93%",
 };
 export class MapContainer extends Component {
-  state = {
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {},
-    mapCenter: mapCenter,
-    currentPosition: {},
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      mapCenter: mapCenter,
+      currentPosition: {},
+      locations: {},
+    };
+  }
   onMarkerClick = (props, marker) => {
     this.setState({
       selectedPlace: props,
@@ -29,15 +32,24 @@ export class MapContainer extends Component {
       showingInfoWindow: true,
     });
   };
-  onMapClicked = (props) => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      });
-    }
-  };
   componentDidMount() {
+    this.onMapClicked = (props, map, e) => {
+      console.log(e.latLng);
+      if (this.state.showingInfoWindow) {
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null,
+        });
+      }
+
+      this.setState({
+        locations: {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+        },
+      });
+      map.panTo(Location);
+    };
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentPosition: {
@@ -48,7 +60,7 @@ export class MapContainer extends Component {
     });
   }
   render() {
-    console.log(this.state.currentPosition);
+    console.log(this.state.locations.lat);
     return (
       <div
         style={{ height: "10vh", width: "100%" }}
@@ -71,6 +83,7 @@ export class MapContainer extends Component {
             }}
             position={this.state.currentPosition}
           />
+          <Marker position={this.state.locations} />
           {places.map((place, i) => (
             <Marker
               key={i}
