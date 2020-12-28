@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import StarRatings from "react-star-ratings";
-import Avatar from 'react-avatar';
 import { Element } from "react-scroll";
-import ShowRatings from "./components/ShowRatings";
-import AddReviews from "./components/AddReviews";
-import Reviews from "./components/Reviews";
-import Form from './components/Form';
-import Ratings from './components/Ratings'
+import Form from "./components/Form";
+import Ratings from "./components/Ratings";
 import MapContainer from "./components/MapContainer";
+import Navbar from "./components/Navbar";
 import "./css/style.css";
 import places from "./places.json";
-import Navbar from "./components/Navbar";
+
 require("dotenv").config();
 
 export class App extends Component {
@@ -56,7 +52,7 @@ export class App extends Component {
       name: "",
       email: "",
       comment: "",
-      stars:0
+      stars: 0,
     });
   }
 
@@ -66,20 +62,11 @@ export class App extends Component {
       restaurantId: id,
     }));
   }
-  AverageStars(){
-  let {places}=this.state
-  places.map(place=>{
-    console.log(place)
-  })
-  }
   
   componentDidMount() {
-  
     this.setState({
       places: places,
     });
-
-
   }
 
   render() {
@@ -125,9 +112,7 @@ export class App extends Component {
                       <div className="col-md-8">
                         <div className="card-body">
                           <h5 ref="restaurantName">{place.restaurantName}</h5>
-                          <div className=" row ml-2  text-warning ">
-                           
-                          </div>
+                          <div className=" row ml-2  text-warning "></div>
                           <span
                             className="mb-4 ml-2"
                             style={{ fontSize: "15px" }}
@@ -167,9 +152,7 @@ export class App extends Component {
                                   {/* // check condtion id */}
 
                                   <div>
-                                   
-                                      <Ratings  place={place} />
-                                    
+                                    <Ratings place={place} />
                                   </div>
                                 </Element>
                               </div>
@@ -196,17 +179,14 @@ export class App extends Component {
                                 }}
                                 aria-labelledby="dropdownMenuButton1"
                               >
-                                <Form 
-                                name ={this.state.name}
-                                email={this.state.name}
-                                 stars ={this.state.stars}
-                                comment={this.state.comment}
-                                handleChange={this.handleChange}
-                                handleSubmit={this.handleSubmit}
-                                
-                                  />
-
-                               
+                                <Form
+                                  name={this.state.name}
+                                  email={this.state.name}
+                                  stars={this.state.stars}
+                                  comment={this.state.comment}
+                                  handleChange={this.handleChange}
+                                  handleSubmit={this.handleSubmit}
+                                />
                               </div>
                             </div>
                           </div>
@@ -216,7 +196,6 @@ export class App extends Component {
                   </div>
                 ))}
               </Element>
-            
 
               {/* end of card */}
             </div>

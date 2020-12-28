@@ -36,9 +36,8 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
-    
       const { location, locations } = this.state;
-          if (this.state.showingInfoWindow) {
+      if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
           activeMarker: null,
@@ -46,7 +45,6 @@ export class MapContainer extends Component {
       }
 
       this.setState((prevState) => ({
-        
         locations: {
           lat: e.latLng.lat(),
           lng: e.latLng.lng(),
@@ -64,9 +62,8 @@ export class MapContainer extends Component {
     });
   }
   render() {
-    
-
     return (
+       
       <div
         style={{ height: "10vh", width: "100%" }}
         className="card-img p-2  mt-5"
@@ -110,6 +107,7 @@ export class MapContainer extends Component {
           )}
         </Map>
       </div>
+     
     );
   }
 }
