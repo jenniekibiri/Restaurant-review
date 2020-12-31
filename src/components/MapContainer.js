@@ -23,7 +23,8 @@ export class MapContainer extends Component {
       mapCenter: mapCenter,
       currentPosition: {},
       locations: {},
-      location: [],
+      newRestaurants:[]
+     
     };
   }
   onMarkerClick = (props, marker) => {
@@ -36,21 +37,23 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
-      const { location, locations } = this.state;
+      const { locations, newRestaurants} = this.state;
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
           activeMarker: null,
         });
       }
+let lat = e.latLng.lat()
+let lng= e.latLng.lng()
+ newRestaurants.push({lat,lng})
 
       this.setState((prevState) => ({
-        locations: {
-          lat: e.latLng.lat(),
-          lng: e.latLng.lng(),
-        },
+
+       newRestaurants
       }));
       map.panTo(Location);
+     
     };
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
@@ -62,6 +65,7 @@ export class MapContainer extends Component {
     });
   }
   render() {
+console.log(this.state.locations)
     return (
        
       <div
@@ -85,7 +89,12 @@ export class MapContainer extends Component {
             }}
             position={this.state.currentPosition}
           />
-          <Marker position={this.state.locations} />
+          {
+            this.state.newRestaurants.map(newRestaurant=>(
+             <Marker position={newRestaurant} /> 
+            ))
+          }
+
           {places.map((place, i) => (
             <Marker
               key={i}

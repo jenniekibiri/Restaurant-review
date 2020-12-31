@@ -26,7 +26,7 @@ export class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getRestaurantId = this.getRestaurantId.bind(this);
-    this.AverageStars = this.AverageStars.bind(this);
+   
   }
   //onclick
 
