@@ -36,6 +36,9 @@ export class MapContainer extends Component {
   };
 
   componentDidMount() {
+
+
+
     this.onMapClicked = (props, map, e) => {
       const { locations, newRestaurants} = this.state;
       if (this.state.showingInfoWindow) {
@@ -65,7 +68,9 @@ let lng= e.latLng.lng()
     });
   }
   render() {
-console.log(this.state.locations)
+    
+    
+
     return (
        
       <div
@@ -94,6 +99,7 @@ console.log(this.state.locations)
              <Marker position={newRestaurant} /> 
             ))
           }
+          
 
           {places.map((place, i) => (
             <Marker

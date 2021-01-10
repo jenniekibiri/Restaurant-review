@@ -4,10 +4,13 @@ import Form from "./components/Form";
 import Ratings from "./components/Ratings";
 import MapContainer from "./components/MapContainer";
 import Navbar from "./components/Navbar";
+import StarRatings from "react-star-ratings";
+import Avatar from "react-avatar";
 import "./css/style.css";
 import places from "./places.json";
-
 require("dotenv").config();
+
+
 
 export class App extends Component {
   constructor(props) {
@@ -17,9 +20,11 @@ export class App extends Component {
       places: [], //json data
       name: "", //user data
       email: "",
+      isLoaded: false,
       stars: 0,
       comment: "",
       restaurantId: 0,
+      pic:''
     };
     // ?why bind this
 
@@ -49,6 +54,7 @@ export class App extends Component {
 
     this.setState({
       places: places,
+      place:[],
       name: "",
       email: "",
       comment: "",
@@ -63,20 +69,107 @@ export class App extends Component {
     }));
   }
   
+
+//   showResataurants = () => {
+// //  const proxyurl = "https://cors-anywhere.herokuapp.com/"
+//  const url =`${process.env.REACT_APP_URL}`
+//     fetch(
+//      url
+//       ,
+//       {
+//         method: "GET",
+//         headers: {
+//           Accept: "application/json",
+         
+//         },
+//       }
+//     ).then((response) => {
+//       return response.json();
+//     }).then((data)=>{
+//       this.setState({
+
+        
+//         place:data.results
+//       })
+//       console.log(data)
+//     })
+//     .catch((err) => console.log(err));
+//   };
+
+
   componentDidMount() {
+     const proxyurl = "https://cors-anywhere.herokuapp.com/"
+     const url =`${process.env.REACT_APP_URL}`
+     fetch(
+     proxyurl+url
+      ,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+         
+        },
+      }
+    ).then((response) => {
+      return response.json();
+    }).then((data)=>{
+      
+      this.setState({
+
+        isLoaded: true,
+
+        place:data.results
+      })
+      
+    })
+    .catch((err) => console.log(err));
     this.setState({
       places: places,
     });
-  }
 
+
+let maxwidth=400
+let key=''
+let photoreference='ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
+let photoRef = 'ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
+const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}&${photoreference}&${key}`}`
+ fetch(
+     proxyurl+photoUrl
+      ,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+         
+        },
+
+      }
+    ).then((response) => {
+   
+    }).then(data=>{
+      console.log(data)
+    })
+    .catch((err) => console.log(err));
+
+
+
+  }
+ 
   render() {
+
+
+    const {isLoaded,place}=this.state
+
+
+ 
     return (
       <div>
         <Navbar />
 
         <div className="row">
           <div className="col-md-8 pr-3 mt-4 pl-4 np-element ">
-            <MapContainer />
+            <MapContainer googleRestaurants={this.state.place} />
           </div>
 
           <div className="col-md-4 mt-4   np-element ">
@@ -94,7 +187,10 @@ export class App extends Component {
                   marginBottom: "0px",
                 }}
               >
-                {this.state.places.map((place) => (
+                {
+                 
+                this.state.places.map((place) => (
+
                   <div
                     className=" mb-3 np-element np-shadow-double"
                     id={place.id}
@@ -195,6 +291,153 @@ export class App extends Component {
                     </div>
                   </div>
                 ))}
+
+
+                 {
+                !isLoaded ? (
+                  <div className="Jumbotron text-center">
+              <h2 className="spinner">loading ...</h2>
+            </div>
+                ):(
+                this.state.place.map(p=>(
+                   <div
+                    className=" mb-3 np-element np-shadow-double"
+                    id={place.id}
+                    key={p.place_id}
+                    style={{ width: "25rem" }}
+                  >
+                    <div className="row no-gutters">
+                      <div className="col-md-4">
+                        <img
+                          src={""}
+                          className=" np-img-wrapper card-img np-img-expand"
+                          alt="..."
+                        />
+                      </div>
+                      <div className="col-md-8">
+                        <div className="card-body">
+                          <h5 ref="restaurantName">{p.name}</h5>
+                          <div className=" row ml-2  text-warning "></div>
+                          <span
+                            className="mb-4 ml-2"
+                            style={{ fontSize: "15px" }}
+                          >
+                            {p.vicinity}{" "}
+                          </span>
+
+                          <div className="row mt-3">
+                            <div className="dropdown">
+                              <i
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                className="material-icons np-colorize np-element mr-2 reviews"
+                              >
+                                expand_more
+                              </i>
+
+                              <div
+                                className="dropdown-menu  card-body np-shadow-inverse  "
+                                style={{ width: "16rem" }}
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                <Element
+                                  name="test7"
+                                  className="element"
+                                  id="containerElement"
+                                  style={{
+                                    position: "relative",
+                                    height: "250px",
+                                    overflow: "scroll",
+                                    marginBottom: "0px",
+                                  }}
+                                >
+                                  {/* // check condtion id */}
+
+                                  <div>
+                                   <div key={p.place_id}>
+            <div className="row">
+              <div className="pl-3">
+                <Avatar
+                  color={Avatar.getRandomColor(["red", "green"])}
+                  name={"jenny"}
+                  size="40"
+                  round="50px"
+                />
+                <span
+                  className="font-weight-lighter ml-2"
+                  style={{ fontSize: "15px" }}
+                >
+                  {"jey"}
+                </span>
+              </div>
+            </div>
+            <div className="text-warning">
+              <StarRatings
+                starRatedColor="yellow"
+                rating={p.rating}
+                starDimension="20px"
+                starSpacing="1px"
+                name="rating"
+              />
+            </div>
+
+            <p
+              style={{ fontSize: "15px" }}
+              className="text-muted"
+              id={p.place_id}
+            >
+              {""}
+            </p>
+          </div>
+                                  </div>
+                                </Element>
+                              </div>
+                            </div>
+                            <div>
+                              <span
+                                type="button"
+                                onClick={this.getRestaurantId}
+                                id={p.place_id}
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                className="add-reviews np-colorize np-element "
+                              >
+                                Add review
+                              </span>
+                              <div
+                                className="dropdown-menu card-body  np-shadow-inverse  mr-3"
+                                style={{
+                                  width: "16rem",
+                                  position: "absolute",
+                                  height: "290px",
+                                  overflow: "scroll",
+                                }}
+                                aria-labelledby="dropdownMenuButton1"
+                              >
+                               <Form
+                                  name={this.state.name}
+                                  email={this.state.name}
+                                  stars={this.state.stars}
+                                  comment={this.state.comment}
+                                  handleChange={this.handleChange}
+                                  handleSubmit={this.handleSubmit}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+            
+                )
+               
+                )}
               </Element>
 
               {/* end of card */}
