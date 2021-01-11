@@ -70,31 +70,7 @@ export class App extends Component {
   }
   
 
-//   showResataurants = () => {
-// //  const proxyurl = "https://cors-anywhere.herokuapp.com/"
-//  const url =`${process.env.REACT_APP_URL}`
-//     fetch(
-//      url
-//       ,
-//       {
-//         method: "GET",
-//         headers: {
-//           Accept: "application/json",
-         
-//         },
-//       }
-//     ).then((response) => {
-//       return response.json();
-//     }).then((data)=>{
-//       this.setState({
 
-        
-//         place:data.results
-//       })
-//       console.log(data)
-//     })
-//     .catch((err) => console.log(err));
-//   };
 
   componentDidMount() {
      const proxyurl = "https://cors-anywhere.herokuapp.com/"
@@ -127,18 +103,6 @@ export class App extends Component {
     });
 
 
-// let maxwidth=400
-// let key=''
-// let photoreference='ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
-// const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}&${photoreference}&${key}`}`
-// let PicUrl=proxyurl+photoUrl
-// fetch(
-//      PicUrl
-//     ).then(response => response.blob())
-//     .then(images => {
-//       console.log(images)
-//   })
-//     .catch((err) => console.log(err));
 
 
 
@@ -298,7 +262,8 @@ export class App extends Component {
                   
                   }
                    
-                  console.log(photoLink) 
+                  
+
                 return(
                   
                    <div

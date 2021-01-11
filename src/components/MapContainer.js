@@ -70,7 +70,7 @@ let lng= e.latLng.lng()
   }
   render() {
     
-    
+    console.log(this.props)
 
     return (
        
