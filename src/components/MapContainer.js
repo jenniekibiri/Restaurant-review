@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import places from "../places.json";
+import Form from "../components/Form"
 require("dotenv").config();
 
 const mapCenter = {
@@ -95,8 +96,12 @@ let lng= e.latLng.lng()
             position={this.state.currentPosition}
           />
           {
-            this.state.newRestaurants.map(newRestaurant=>(
-             <Marker position={newRestaurant} /> 
+            this.state.newRestaurants.map((newRestaurant,i)=>(
+             <Marker key={i}
+             position={newRestaurant}
+             onClick={this.onMarkerClick}
+
+              /> 
             ))
           }
           
@@ -117,6 +122,7 @@ let lng= e.latLng.lng()
             >
               <div>
                 <h6>{this.state.selectedPlace.name}</h6>
+                <Form/>
               </div>
             </InfoWindow>
           )}

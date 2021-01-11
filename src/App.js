@@ -96,7 +96,6 @@ export class App extends Component {
 //     .catch((err) => console.log(err));
 //   };
 
-
   componentDidMount() {
      const proxyurl = "https://cors-anywhere.herokuapp.com/"
      const url =`${process.env.REACT_APP_URL}`
@@ -113,7 +112,7 @@ export class App extends Component {
     ).then((response) => {
       return response.json();
     }).then((data)=>{
-      
+
       this.setState({
 
         isLoaded: true,
@@ -128,29 +127,18 @@ export class App extends Component {
     });
 
 
-let maxwidth=400
-let key=''
-let photoreference='ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
-let photoRef = 'ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
-const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}&${photoreference}&${key}`}`
- fetch(
-     proxyurl+photoUrl
-      ,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-         
-        },
-
-      }
-    ).then((response) => {
-   
-    }).then(data=>{
-      console.log(data)
-    })
-    .catch((err) => console.log(err));
+// let maxwidth=400
+// let key=''
+// let photoreference='ATtYBwJ4Q4DKL6m3R0g10u1zMrXrFq0k25OLQBZWsjxANp8Ck8Sn1VyxTsLofUJc-1EzycyA5gwwxl-e9AKTSU6u4e-NPr8YnoVqVgS6Q6nXZOrc11I5NGQ1tYzYi0GzRd3OqZyxdkZyP86FEs_yxzZIDymacrsxxx7Z-bRwCH3gcaV12iIE'
+// const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}&${photoreference}&${key}`}`
+// let PicUrl=proxyurl+photoUrl
+// fetch(
+//      PicUrl
+//     ).then(response => response.blob())
+//     .then(images => {
+//       console.log(images)
+//   })
+//     .catch((err) => console.log(err));
 
 
 
@@ -299,8 +287,22 @@ const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}
               <h2 className="spinner">loading ...</h2>
             </div>
                 ):(
-                this.state.place.map(p=>(
+                this.state.place.map(p=>{    
+                  let photoRef = p.photos
+                  var photoLink;
+                  if(photoRef!==undefined){
+                  
+                     photoLink=p.photos[0].photo_reference
+                  }else{
+                    photoLink="ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C"
+                  
+                  }
+                   
+                  console.log(photoLink) 
+                return(
+                  
                    <div
+                   
                     className=" mb-3 np-element np-shadow-double"
                     id={place.id}
                     key={p.place_id}
@@ -308,8 +310,10 @@ const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}
                   >
                     <div className="row no-gutters">
                       <div className="col-md-4">
+                      
                         <img
-                          src={""}
+                        
+                          src={`${`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}`}
                           className=" np-img-wrapper card-img np-img-expand"
                           alt="..."
                         />
@@ -434,6 +438,7 @@ const photoUrl =`${`https://maps.googleapis.com/maps/api/place/photo?${maxwidth}
                     </div>
                   </div>
                 )
+  }
             
                 )
                

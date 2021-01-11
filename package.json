@@ -2,6 +2,7 @@
   "name": "restaurant-review",
   "version": "0.1.0",
   "private": true,
+  "proxy":"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-1.2845056,36.817786&radius=100&type=restaurant&key=AIzaSyCgozHQ3ZwTF8q4jwRIl_YyhcK1ijEtUQc",
   "dependencies": {
     "@react-google-maps/api": "^1.13.0",
     "@testing-library/jest-dom": "^4.2.4",
