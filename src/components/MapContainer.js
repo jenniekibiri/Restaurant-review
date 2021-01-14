@@ -18,13 +18,15 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    place:[],
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       mapCenter: mapCenter,
       currentPosition: {},
       locations: {},
-      newRestaurants:[]
+      newRestaurants:[],
+      isLoaded:false
      
     };
   }
@@ -38,7 +40,12 @@ export class MapContainer extends Component {
 
   componentDidMount() {
 
-
+ 
+    this.setState({
+      place:this.props.googleRestaurants,
+      isLoaded:true
+    })
+ 
 
     this.onMapClicked = (props, map, e) => {
       const { locations, newRestaurants} = this.state;
@@ -69,11 +76,9 @@ let lng= e.latLng.lng()
     });
   }
   render() {
-    
-    console.log(this.props)
-
+    const { isLoaded, place } = this.state;
+ 
     return (
-       
       <div
         style={{ height: "10vh", width: "100%" }}
         className="card-img p-2  mt-5"
@@ -95,7 +100,17 @@ let lng= e.latLng.lng()
             }}
             position={this.state.currentPosition}
           />
-          {
+
+          {this.props.googleRestaurants===undefined ?(console.log('loading')):(
+              this.props.googleRestaurants.map((p,i)=>(
+       <Marker key={i}
+             position={p.geometry.location}
+             onClick={this.onMarkerClick}
+
+              /> 
+          ))
+          )}
+          {  
             this.state.newRestaurants.map((newRestaurant,i)=>(
              <Marker key={i}
              position={newRestaurant}

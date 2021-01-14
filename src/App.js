@@ -73,6 +73,7 @@ export class App extends Component {
       method: "GET",
       headers: {
         Accept: "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:3000"
       },
     })
       .then((response) => {
