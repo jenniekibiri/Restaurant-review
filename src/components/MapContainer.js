@@ -18,15 +18,14 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    place:[],
+   
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       mapCenter: mapCenter,
       currentPosition: {},
-      locations: {},
       newRestaurants:[],
-      isLoaded:false
+
      
     };
   }
@@ -41,14 +40,10 @@ export class MapContainer extends Component {
   componentDidMount() {
 
  
-    this.setState({
-      place:this.props.googleRestaurants,
-      isLoaded:true
-    })
  
 
     this.onMapClicked = (props, map, e) => {
-      const { locations, newRestaurants} = this.state;
+      const { newRestaurants} = this.state;
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,

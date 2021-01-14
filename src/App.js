@@ -39,9 +39,12 @@ export class App extends Component {
       [e.target.name]: e.target.value,
     });
   }
+
+ 
   //handle submit
-  handleSubmit(e) {
-    e.preventDefault();
+ handleSubmit= (e) =>{
+   
+    
     const { name, comment, stars, places, restaurantId } = this.state;
     places.map((place) => {
       if (restaurantId == place.id) {
@@ -57,7 +60,10 @@ export class App extends Component {
       comment: "",
       stars: 0,
     });
-  }
+    e.preventDefault();
+  }  
+
+  
 
   getRestaurantId(e) {
     let id = e.target.id;
@@ -206,7 +212,7 @@ export class App extends Component {
                               >
                                 <Form
                                   name={this.state.name}
-                                  email={this.state.name}
+                                  email={this.state.email}
                                   stars={this.state.stars}
                                   comment={this.state.comment}
                                   handleChange={this.handleChange}
