@@ -6,7 +6,6 @@ export class Form extends Component {
     this.state = {};
   }
 
- 
   render() {
     return (
       <div>

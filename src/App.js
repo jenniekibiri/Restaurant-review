@@ -53,8 +53,7 @@ export class App extends Component {
     });
 
     this.setState({
-      places: places,
-      place: [],
+     
       name: "",
       email: "",
       comment: "",
@@ -75,7 +74,9 @@ export class App extends Component {
   componentDidMount() {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = `${process.env.REACT_APP_URL}`;
+   
     fetch(proxyurl + url, {
+
       method: "GET",
       headers: {
         Accept: "application/json",
