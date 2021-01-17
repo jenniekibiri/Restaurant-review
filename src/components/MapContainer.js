@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
+import Form from "../components/Form"
 import places from "../places.json";
-import Form from "../components/Form";
 require("dotenv").config();
 
 const mapCenter = {
@@ -21,10 +21,12 @@ export class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
+      mapClicked:false,
       mapCenter: mapCenter,
       currentPosition: {},
       newRestaurants: [],
     };
+
   }
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -36,7 +38,9 @@ export class MapContainer extends Component {
 
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
+     
       const { newRestaurants } = this.state;
+
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
@@ -48,6 +52,7 @@ export class MapContainer extends Component {
       newRestaurants.push({ lat, lng });
 
       this.setState((prevState) => ({
+       mapClicked:true,
         newRestaurants,
       }));
       
@@ -61,12 +66,15 @@ export class MapContainer extends Component {
       });
     });
   }
-  render() {
+ render() {
     return (
+
+
       <div
         style={{ height: "10vh", width: "100%" }}
         className="card-img p-2  mt-5"
       >
+
         <Map
           google={this.props.google}
           style={mapStyles}
@@ -90,6 +98,7 @@ export class MapContainer extends Component {
             : this.props.googleRestaurants.map((p, i) => (
                 <Marker
                   key={i}
+                  name={p.name}
                   position={p.geometry.location}
                   onClick={this.onMarkerClick}
                 />
@@ -97,12 +106,12 @@ export class MapContainer extends Component {
           {this.state.newRestaurants.map((newRestaurant, i) => (
             <Marker
               key={i}
+              
               position={newRestaurant}
               onClick={this.onMarkerClick}
             />
           ))}
-
-          {places.map((place, i) => (
+         {places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
@@ -117,12 +126,14 @@ export class MapContainer extends Component {
               visible={this.state.showingInfoWindow}
             >
               <div>
-                <h6>{this.state.selectedPlace.name}</h6>
-                <Form />
+                <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
+               
               </div>
+
             </InfoWindow>
           )}
         </Map>
+
       </div>
     );
   }

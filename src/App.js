@@ -9,7 +9,6 @@ import Avatar from "react-avatar";
 import "./css/style.css";
 import places from "./places.json";
 require("dotenv").config();
-
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +45,7 @@ export class App extends Component {
 
   //handle submit
   handleSubmit = (e) => {
-    const { author_name, text, rating, places, restaurantId, place,ratings } = this.state;
+    const { author_name, text, rating, places, restaurantId,ratings } = this.state;
 
     places.map((place) => {
       
@@ -56,8 +55,7 @@ export class App extends Component {
       }
     });
 ratings.map((r)=>{
-  console.log(r)
-  console.log(r.place_id)
+  
  if (restaurantId ===r.place_id) {
 if(r.reviews !==undefined){
   
@@ -109,7 +107,7 @@ r.reviews=[
           let placeid = result.place_id;
 
           fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
               headers: {
@@ -278,12 +276,12 @@ r.reviews=[
                 ) : (
                   this.state.ratings.map((p) => {
                     let photoRef = p.photos;
+           
                     var photoLink;
                     if (photoRef !== undefined) {
                       photoLink = p.photos[0].photo_reference;
                     } else {
-                      photoLink =
-                        "ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
+                      photoLink ="ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
                     }
 
                     return (
@@ -348,8 +346,8 @@ r.reviews=[
                     <p className="spinner">No reviews yet</p>
                   </div>
                 )
-                                        : p.reviews.map((review) => (
-                                            <div>
+                                        : p.reviews.map((review,i) => (
+                                            <div key={i}>
                                               <div key={p.place_id}>
                                                 <div className="row">
                                                   <div className="pl-3">
