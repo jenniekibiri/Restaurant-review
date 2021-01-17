@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import places from "../places.json";
-import Form from "../components/Form"
+import Form from "../components/Form";
 require("dotenv").config();
 
 const mapCenter = {
@@ -18,15 +18,12 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-   
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
       mapCenter: mapCenter,
       currentPosition: {},
-      newRestaurants:[],
-
-     
+      newRestaurants: [],
     };
   }
   onMarkerClick = (props, marker) => {
@@ -38,28 +35,22 @@ export class MapContainer extends Component {
   };
 
   componentDidMount() {
-
- 
- 
-
     this.onMapClicked = (props, map, e) => {
-      const { newRestaurants} = this.state;
+      const { newRestaurants } = this.state;
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
           activeMarker: null,
         });
       }
-let lat = e.latLng.lat()
-let lng= e.latLng.lng()
- newRestaurants.push({lat,lng})
+      let lat = e.latLng.lat();
+      let lng = e.latLng.lng();
+      newRestaurants.push({ lat, lng });
 
       this.setState((prevState) => ({
-
-       newRestaurants
+        newRestaurants,
       }));
       map.panTo(Location);
-     
     };
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
@@ -71,8 +62,6 @@ let lng= e.latLng.lng()
     });
   }
   render() {
-    const { isLoaded, place } = this.state;
- 
     return (
       <div
         style={{ height: "10vh", width: "100%" }}
@@ -96,25 +85,22 @@ let lng= e.latLng.lng()
             position={this.state.currentPosition}
           />
 
-          {this.props.googleRestaurants===undefined ?(console.log('loading')):(
-              this.props.googleRestaurants.map((p,i)=>(
-       <Marker key={i}
-             position={p.geometry.location}
-             onClick={this.onMarkerClick}
-
-              /> 
-          ))
-          )}
-          {  
-            this.state.newRestaurants.map((newRestaurant,i)=>(
-             <Marker key={i}
-             position={newRestaurant}
-             onClick={this.onMarkerClick}
-
-              /> 
-            ))
-          }
-          
+          {this.props.googleRestaurants === undefined
+            ? console.log("loading")
+            : this.props.googleRestaurants.map((p, i) => (
+                <Marker
+                  key={i}
+                  position={p.geometry.location}
+                  onClick={this.onMarkerClick}
+                />
+              ))}
+          {this.state.newRestaurants.map((newRestaurant, i) => (
+            <Marker
+              key={i}
+              position={newRestaurant}
+              onClick={this.onMarkerClick}
+            />
+          ))}
 
           {places.map((place, i) => (
             <Marker
@@ -132,13 +118,12 @@ let lng= e.latLng.lng()
             >
               <div>
                 <h6>{this.state.selectedPlace.name}</h6>
-                <Form/>
+                <Form />
               </div>
             </InfoWindow>
           )}
         </Map>
       </div>
-     
     );
   }
 }

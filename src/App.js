@@ -16,13 +16,17 @@ export class App extends Component {
     //state
     this.state = {
       places: [], //json data
+      place: [],
+      rating: [],
       name: "", //user data
       email: "",
       isLoaded: false,
+      dataLoaded: false,
       stars: 0,
       comment: "",
       restaurantId: 0,
       pic: "",
+      placeId: "",
     };
     // ?why bind this
 
@@ -40,32 +44,28 @@ export class App extends Component {
     });
   }
 
- 
   //handle submit
- handleSubmit= (e) =>{
-   
-    
-    const { name, comment, stars, places, restaurantId } = this.state;
+  handleSubmit = (e) => {
+    const { name, comment, stars, places, restaurantId, place } = this.state;
+
     places.map((place) => {
-      if (restaurantId == place.id) {
+      if (restaurantId === place.id) {
         place.ratings.push({ name, stars, comment });
       }
     });
 
     this.setState({
-     
       name: "",
       email: "",
       comment: "",
       stars: 0,
     });
     e.preventDefault();
-  }  
-
-  
+  };
 
   getRestaurantId(e) {
     let id = e.target.id;
+
     this.setState((state) => ({
       restaurantId: id,
     }));
@@ -74,26 +74,52 @@ export class App extends Component {
   componentDidMount() {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = `${process.env.REACT_APP_URL}`;
-   
-    fetch(proxyurl + url, {
-
+    fetch(url, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000"
+        "Access-Control-Allow-Origin": "http://localhost:3000",
       },
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
+        let results = data.results;
+
+        results.map((result) => {
+          let placeid = result.place_id;
+
+          fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,vicinity,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "http://localhost:3000",
+              },
+            }
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              const { rating } = this.state;
+              rating.push(data.result);
+              this.setState({
+                rating,
+                dataLoaded: true,
+              });
+            });
+        });
+
         this.setState({
           isLoaded: true,
-
           place: data.results,
         });
       })
       .catch((err) => console.log(err));
+
     this.setState({
       places: places,
     });
@@ -164,7 +190,6 @@ export class App extends Component {
                               >
                                 expand_more
                               </i>
-
                               <div
                                 className="dropdown-menu  card-body np-shadow-inverse  "
                                 style={{ width: "16rem" }}
@@ -233,7 +258,7 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                  this.state.place.map((p) => {
+                  this.state.rating.map((p) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {
@@ -273,7 +298,7 @@ export class App extends Component {
                                 <div className="dropdown">
                                   <i
                                     type="button"
-                                    id="dropdownMenuButton"
+                                    id={p.place_id}
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
                                     aria-expanded="false"
@@ -299,47 +324,56 @@ export class App extends Component {
                                       }}
                                     >
                                       {/* // check condtion id */}
+                                      {p.reviews === undefined
+                                        ? (
+                  <div className="Jumbotron text-center">
+                    <p className="spinner">No reviews yet</p>
+                  </div>
+                )
+                                        : p.reviews.map((review) => (
+                                            <div>
+                                              <div key={p.place_id}>
+                                                <div className="row">
+                                                  <div className="pl-3">
+                                                    <Avatar
+                                                      color={Avatar.getRandomColor(
+                                                        ["red", "green"]
+                                                      )}
+                                                      name={"jenny"}
+                                                      size="40"
+                                                      round="50px"
+                                                    />
 
-                                      <div>
-                                        <div key={p.place_id}>
-                                          <div className="row">
-                                            <div className="pl-3">
-                                              <Avatar
-                                                color={Avatar.getRandomColor([
-                                                  "red",
-                                                  "green",
-                                                ])}
-                                                name={"jenny"}
-                                                size="40"
-                                                round="50px"
-                                              />
-                                              <span
-                                                className="font-weight-lighter ml-2"
-                                                style={{ fontSize: "15px" }}
-                                              >
-                                                {"jey"}
-                                              </span>
+                                                    <span
+                                                      className="font-weight-lighter ml-2"
+                                                      style={{
+                                                        fontSize: "15px",
+                                                      }}
+                                                    >
+                                                      {review.author_name}
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                                <div className="text-warning">
+                                                  <StarRatings
+                                                    starRatedColor="yellow"
+                                                    rating={p.rating}
+                                                    starDimension="20px"
+                                                    starSpacing="1px"
+                                                    name="rating"
+                                                  />
+                                                </div>
+
+                                                <p
+                                                  style={{ fontSize: "15px" }}
+                                                  className="text-muted"
+                                                  id={p.place_id}
+                                                >
+                                                  {review.text}
+                                                </p>
+                                              </div>
                                             </div>
-                                          </div>
-                                          <div className="text-warning">
-                                            <StarRatings
-                                              starRatedColor="yellow"
-                                              rating={p.rating}
-                                              starDimension="20px"
-                                              starSpacing="1px"
-                                              name="rating"
-                                            />
-                                          </div>
-
-                                          <p
-                                            style={{ fontSize: "15px" }}
-                                            className="text-muted"
-                                            id={p.place_id}
-                                          >
-                                            {""}
-                                          </p>
-                                        </div>
-                                      </div>
+                                          ))}
                                     </Element>
                                   </div>
                                 </div>
