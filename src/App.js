@@ -49,7 +49,9 @@ export class App extends Component {
     const { author_name, text, rating, places, restaurantId, place,ratings } = this.state;
 
     places.map((place) => {
-      if (restaurantId === place.id) {
+      
+      if (restaurantId == place.id) {
+       
         place.ratings.push({ author_name, rating, text });
       }
     });

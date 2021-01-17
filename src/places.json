@@ -9,12 +9,12 @@
       "ratings":[
          {
              "author_name":"belle",
-            "stars":4,
+            "rating":4,
             "text":"Great! But not many veggie options."
          },
          {
              "author_name":"tess",
-            "stars":5,
+            "rating":5,
             "text":"My favorite restaurant!"
          }
       ]
@@ -29,12 +29,12 @@
       "ratings":[
          {
                "author_name":"jeny kibiri",
-            "stars":5,
+            "rating":5,
             "text":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
              "author_name":"jen ",
-            "stars":3,
+            "rating":3,
             "text":"Meh, it was fine."
          }
       ]
@@ -50,12 +50,12 @@
       "ratings":[
          {
              "author_name":"sophie",
-            "stars":5,
+            "rating":5,
             "text":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
              "author_name":"terry",
-            "stars":3,
+            "rating":3,
             "text":"Meh, it was fine."
          }
       ]
@@ -70,12 +70,12 @@
       "ratings":[
          {
              "author_name":"zippy",
-            "stars":5,
+            "rating":5,
             "text":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
              "author_name":"charles",
-            "stars":3,
+            "rating":3,
             "text":"Meh, it was fine."
          }
       ]
@@ -90,12 +90,12 @@
       "ratings":[
          {
              "author_name":"josphat",
-            "stars":5,
+            "rating":5,
             "text":"Tiny pizzeria next to Sacre Coeur!"
          },
          {
              "author_name":"mary",
-            "stars":3,
+            "rating":3,
             "text":"Meh, it was fine."
          }
       ]

@@ -26,7 +26,7 @@ export class Ratings extends Component {
             <div className="text-warning">
               <StarRatings
                 starRatedColor="yellow"
-                rating={Number(rating.stars)}
+                rating={Number(rating.rating)}
                 starDimension="20px"
                 starSpacing="1px"
                 name="rating"
