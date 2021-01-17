@@ -13,10 +13,10 @@ export class Form extends Component {
           <div className="form-group">
             <input
               onChange={this.props.handleChange}
-              value={this.props.name}
+              value={this.props.author_name}
               type="text"
               className="form-control"
-              name="name"
+              name="author_name"
               placeholder="full name"
               id="recipient-name"
             />
@@ -35,10 +35,10 @@ export class Form extends Component {
           <div className="form-group ">
             <input
               onChange={this.props.handleChange}
-              value={this.props.star}
+              value={this.props.rating}
               type="number"
               className="form-control"
-              name="stars"
+              name="rating"
               placeholder="1"
               id="recipient-name"
               min="1"
@@ -49,9 +49,9 @@ export class Form extends Component {
           <div className="form-group">
             <textarea
               onChange={this.props.handleChange}
-              value={this.props.comment}
+              value={this.props.text}
               className="form-control"
-              name="comment"
+              name="text"
               id="message-text"
             ></textarea>
           </div>

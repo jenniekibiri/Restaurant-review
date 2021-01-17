@@ -11,7 +11,7 @@ export class Ratings extends Component {
               <div className="pl-3">
                 <Avatar
                   color={Avatar.getRandomColor(["red", "green"])}
-                  name={rating.name}
+                  name={rating.author_name}
                   size="40"
                   round="50px"
                 />
@@ -19,7 +19,7 @@ export class Ratings extends Component {
                   className="font-weight-lighter ml-2"
                   style={{ fontSize: "15px" }}
                 >
-                  {rating.name}
+                  {rating.author_name}
                 </span>
               </div>
             </div>
@@ -38,7 +38,7 @@ export class Ratings extends Component {
               className="text-muted"
               id={this.props.place.id}
             >
-              {rating.comment}
+              {rating.text}
             </p>
           </div>
         ))}

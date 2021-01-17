@@ -17,13 +17,13 @@ export class App extends Component {
     this.state = {
       places: [], //json data
       place: [],
-      rating: [],
-      name: "", //user data
+      ratings: [],
+      author_name: "", //user data
       email: "",
       isLoaded: false,
       dataLoaded: false,
-      stars: 0,
-      comment: "",
+      rating: 0,
+      text: "",
       restaurantId: 0,
       pic: "",
       placeId: "",
@@ -46,19 +46,35 @@ export class App extends Component {
 
   //handle submit
   handleSubmit = (e) => {
-    const { name, comment, stars, places, restaurantId, place } = this.state;
+    const { author_name, text, rating, places, restaurantId, place,ratings } = this.state;
 
     places.map((place) => {
       if (restaurantId === place.id) {
-        place.ratings.push({ name, stars, comment });
+        place.ratings.push({ author_name, rating, text });
       }
     });
-
+ratings.map((r)=>{
+  console.log(r)
+  console.log(r.place_id)
+ if (restaurantId ===r.place_id) {
+if(r.reviews !==undefined){
+  
+   r.reviews.push({ author_name,rating, text });
+}else{
+r.reviews=[
+  {
+    author_name, rating, text 
+  }
+]
+}
+     
+      }
+})
     this.setState({
-      name: "",
+      author_name: "",
       email: "",
-      comment: "",
-      stars: 0,
+      text: "",
+      rating: 0,
     });
     e.preventDefault();
   };
@@ -91,7 +107,7 @@ export class App extends Component {
           let placeid = result.place_id;
 
           fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,vicinity,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
               headers: {
@@ -104,10 +120,10 @@ export class App extends Component {
               return response.json();
             })
             .then((data) => {
-              const { rating } = this.state;
-              rating.push(data.result);
+              const { ratings } = this.state;
+              ratings.push(data.result);
               this.setState({
-                rating,
+                ratings,
                 dataLoaded: true,
               });
             });
@@ -237,10 +253,10 @@ export class App extends Component {
                                 aria-labelledby="dropdownMenuButton1"
                               >
                                 <Form
-                                  name={this.state.name}
+                                  author_name={this.state.author_name}
                                   email={this.state.email}
-                                  stars={this.state.stars}
-                                  comment={this.state.comment}
+                                  rating={this.state.rating}
+                                  text={this.state.text}
                                   handleChange={this.handleChange}
                                   handleSubmit={this.handleSubmit}
                                 />
@@ -258,7 +274,7 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                  this.state.rating.map((p) => {
+                  this.state.ratings.map((p) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {
@@ -339,7 +355,7 @@ export class App extends Component {
                                                       color={Avatar.getRandomColor(
                                                         ["red", "green"]
                                                       )}
-                                                      name={"jenny"}
+                                                      name={review.author_name}
                                                       size="40"
                                                       round="50px"
                                                     />
@@ -357,7 +373,7 @@ export class App extends Component {
                                                 <div className="text-warning">
                                                   <StarRatings
                                                     starRatedColor="yellow"
-                                                    rating={p.rating}
+                                                    rating={Number(review.rating)}
                                                     starDimension="20px"
                                                     starSpacing="1px"
                                                     name="rating"
@@ -400,10 +416,10 @@ export class App extends Component {
                                     aria-labelledby="dropdownMenuButton1"
                                   >
                                     <Form
-                                      name={this.state.name}
-                                      email={this.state.name}
-                                      stars={this.state.stars}
-                                      comment={this.state.comment}
+                                      name={this.state.author_name}
+                                      email={this.state.email}
+                                      rating={this.state.rating}
+                                      text={this.state.text}
                                       handleChange={this.handleChange}
                                       handleSubmit={this.handleSubmit}
                                     />
