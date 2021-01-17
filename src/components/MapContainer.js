@@ -50,7 +50,7 @@ export class MapContainer extends Component {
       this.setState((prevState) => ({
         newRestaurants,
       }));
-      map.panTo(Location);
+      
     };
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
