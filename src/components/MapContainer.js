@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import Form from "../components/Form"
+import Form from "../components/Form";
 import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
@@ -22,12 +22,11 @@ export class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      mapClicked:false,
+      mapClicked: false,
       mapCenter: mapCenter,
       currentPosition: {},
       newRestaurants: [],
     };
-
   }
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -39,12 +38,11 @@ export class MapContainer extends Component {
 
   onInfoWindowClose = () =>
     this.setState({
-        activeMarker: null,
-        showingInfoWindow: false
+      activeMarker: null,
+      showingInfoWindow: false,
     });
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
-     
       const { newRestaurants } = this.state;
 
       if (this.state.showingInfoWindow) {
@@ -58,10 +56,9 @@ export class MapContainer extends Component {
       newRestaurants.push({ lat, lng });
 
       this.setState((prevState) => ({
-       mapClicked:true,
+        mapClicked: true,
         newRestaurants,
       }));
-      
     };
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
@@ -72,15 +69,12 @@ export class MapContainer extends Component {
       });
     });
   }
- render() {
+  render() {
     return (
-
-
       <div
         style={{ height: "10vh", width: "100%" }}
         className="card-img p-2  mt-5"
       >
-
         <Map
           google={this.props.google}
           style={mapStyles}
@@ -102,41 +96,38 @@ export class MapContainer extends Component {
           {this.props.googleRestaurants === undefined
             ? console.log("loading")
             : this.props.googleRestaurants.map((p, i) => {
-              let photoRef = p.photos;
-           
-                    var photoLink;
-                    if (photoRef !== undefined) {
-                      photoLink = p.photos[0].photo_reference;
-                    } else {
-                      photoLink ="ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
-                    }
-              
-return(
-   <Marker
-                  key={i}
-                  name={p.name}
-                  rating={p.rating}
-                 photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
-                  position={p.geometry.location}
-               onClick={this.onMarkerClick}
-                />
-)
-  
-             
-          })}
+                let photoRef = p.photos;
+
+                var photoLink;
+                if (photoRef !== undefined) {
+                  photoLink = p.photos[0].photo_reference;
+                } else {
+                  photoLink =
+                    "ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
+                }
+
+                return (
+                  <Marker
+                    key={i}
+                    name={p.name}
+                    rating={p.rating}
+                    photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
+                    position={p.geometry.location}
+                    onClick={this.onMarkerClick}
+                  />
+                );
+              })}
           {this.state.newRestaurants.map((newRestaurant, i) => (
             <Marker
               key={i}
               position={newRestaurant}
-                 onClick={this.addRestaurant}
-              
+              onClick={this.addRestaurant}
             />
           ))}
-         {places.map((place, i) => (
+          {places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
-            
               rating={place.rating}
               photo={place.photo}
               onClick={this.onMarkerClick}
@@ -144,7 +135,7 @@ return(
             />
           ))}
 
-        {this.state.showingInfoWindow === true && (
+          {this.state.showingInfoWindow === true && (
             <InfoWindow
               marker={this.state.activeMarker}
               onCloseClick={this.onInfoWindowClose}
@@ -152,25 +143,22 @@ return(
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
- <StarRatings
-                                                    starRatedColor="yellow"
-                                                    rating={this.state.selectedPlace.rating}
-                                                    starDimension="20px"
-                                                    starSpacing="1px"
-                                                    name="rating"
-                                                  />
-                                                   <img
-                          src={this.state.selectedPlace.photo}
-                          className=" np-img-wrapper card-img np-img-expand"
-                          alt="..."
-                        />
-               
+                <StarRatings
+                  starRatedColor="yellow"
+                  rating={this.state.selectedPlace.rating}
+                  starDimension="20px"
+                  starSpacing="1px"
+                  name="rating"
+                />
+                <img
+                  src={this.state.selectedPlace.photo}
+                  className=" np-img-wrapper card-img np-img-expand"
+                  alt="..."
+                />
               </div>
-
             </InfoWindow>
           )}
         </Map>
-
       </div>
     );
   }

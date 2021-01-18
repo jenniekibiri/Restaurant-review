@@ -1,107 +1,107 @@
 [
-   {
-       "id":1,
-      "restaurantName":"Bronco",
-      "address":"39 Rue des Petites Écuries, 75010 Paris",
-      "photo": "https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-       "lat":-1.2856,
-      "long":36.877856,
-      "rating":4,
-      "ratings":[
-         {
-             "author_name":"belle",
-            "rating":4,
-            "text":"Great! But not many veggie options."
-         },
-         {
-             "author_name":"tess",
-            "rating":5,
-            "text":"My favorite restaurant!"
-         }
-      ]
-   },
-   {
-       "id":2,
-      "restaurantName":"Babalou",
-      "address":"4 Rue Lamarck, 75018 Paris",
-      "photo": "https://images.pexels.com/photos/2260827/pexels-photo-2260827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-       "lat":-1.249056,
-      "long":36.877856,
-      "rating":4,
-      "ratings":[
-         {
-               "author_name":"jeny kibiri",
-            "rating":5,
-            "text":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-             "author_name":"jen ",
-            "rating":3,
-            "text":"Meh, it was fine."
-         }
-      ]
-   },
-     {
-       "id":3,
-      "restaurantName":"Hero",
-      "address":"4 Rue Lamarck, 75018 Paris",
-      "photo": "https://images.pexels.com/photos/2434627/pexels-photo-2434627.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      "lat":-1.2747052,
-      "long":36.866856,
-       "rating":4,
-      "ratings":[
-         {
-             "author_name":"sophie",
-            "rating":5,
-            "text":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-             "author_name":"terry",
-            "rating":3,
-            "text":"Meh, it was fine."
-         }
-      ]
-   },
-     {
-       "id":4,
-      "restaurantName":"marine hotel",
-      "address":"4 Rue Lamarck, 75018 Paris",
-       "photo": "https://images.pexels.com/photos/1383776/pexels-photo-1383776.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      "lat":-1.2885056,
-      "long":36.8377856,
-      "rating":4,
-      "ratings":[
-         {
-             "author_name":"zippy",
-            "rating":5,
-            "text":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-             "author_name":"charles",
-            "rating":3,
-            "text":"Meh, it was fine."
-         }
-      ]
-   },
-     {
-       "id":5,
-      "restaurantName":"another hotel",
-      "address":"4 Rue Lamarck, 75018 Paris",
-       "photo": "https://images.pexels.com/photos/1322184/pexels-photo-1322184.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-     "lat": -1.2845056,
-       "long": 36.817786,
-       "rating":4,
-      "ratings":[
-         {
-             "author_name":"josphat",
-            "rating":5,
-            "text":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-             "author_name":"mary",
-            "rating":3,
-            "text":"Meh, it was fine."
-         }
-      ]
-   }
+  {
+    "id": 1,
+    "restaurantName": "Bronco",
+    "address": "39 Rue des Petites Écuries, 75010 Paris",
+    "photo": "https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "lat": -1.2856,
+    "long": 36.877856,
+    "rating": 4,
+    "ratings": [
+      {
+        "author_name": "belle",
+        "rating": 4,
+        "text": "Great! But not many veggie options."
+      },
+      {
+        "author_name": "tess",
+        "rating": 5,
+        "text": "My favorite restaurant!"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "restaurantName": "Babalou",
+    "address": "4 Rue Lamarck, 75018 Paris",
+    "photo": "https://images.pexels.com/photos/2260827/pexels-photo-2260827.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "lat": -1.249056,
+    "long": 36.877856,
+    "rating": 4,
+    "ratings": [
+      {
+        "author_name": "jeny kibiri",
+        "rating": 5,
+        "text": "Tiny pizzeria next to Sacre Coeur!"
+      },
+      {
+        "author_name": "jen ",
+        "rating": 3,
+        "text": "Meh, it was fine."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "restaurantName": "Hero",
+    "address": "4 Rue Lamarck, 75018 Paris",
+    "photo": "https://images.pexels.com/photos/2434627/pexels-photo-2434627.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "lat": -1.2747052,
+    "long": 36.866856,
+    "rating": 4,
+    "ratings": [
+      {
+        "author_name": "sophie",
+        "rating": 5,
+        "text": "Tiny pizzeria next to Sacre Coeur!"
+      },
+      {
+        "author_name": "terry",
+        "rating": 3,
+        "text": "Meh, it was fine."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "restaurantName": "marine hotel",
+    "address": "4 Rue Lamarck, 75018 Paris",
+    "photo": "https://images.pexels.com/photos/1383776/pexels-photo-1383776.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "lat": -1.2885056,
+    "long": 36.8377856,
+    "rating": 4,
+    "ratings": [
+      {
+        "author_name": "zippy",
+        "rating": 5,
+        "text": "Tiny pizzeria next to Sacre Coeur!"
+      },
+      {
+        "author_name": "charles",
+        "rating": 3,
+        "text": "Meh, it was fine."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "restaurantName": "another hotel",
+    "address": "4 Rue Lamarck, 75018 Paris",
+    "photo": "https://images.pexels.com/photos/1322184/pexels-photo-1322184.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "lat": -1.2845056,
+    "long": 36.817786,
+    "rating": 4,
+    "ratings": [
+      {
+        "author_name": "josphat",
+        "rating": 5,
+        "text": "Tiny pizzeria next to Sacre Coeur!"
+      },
+      {
+        "author_name": "mary",
+        "rating": 3,
+        "text": "Meh, it was fine."
+      }
+    ]
+  }
 ]

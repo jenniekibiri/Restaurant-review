@@ -45,31 +45,35 @@ export class App extends Component {
 
   //handle submit
   handleSubmit = (e) => {
-    const { author_name, text, rating, places, restaurantId,ratings } = this.state;
+    const {
+      author_name,
+      text,
+      rating,
+      places,
+      restaurantId,
+      ratings,
+    } = this.state;
 
     places.map((place) => {
-      
       if (restaurantId == place.id) {
-       
         place.ratings.push({ author_name, rating, text });
       }
     });
-ratings.map((r)=>{
-  
- if (restaurantId ===r.place_id) {
-if(r.reviews !==undefined){
-  
-   r.reviews.push({ author_name,rating, text });
-}else{
-r.reviews=[
-  {
-    author_name, rating, text 
-  }
-]
-}
-     
+    ratings.map((r) => {
+      if (restaurantId === r.place_id) {
+        if (r.reviews !== undefined) {
+          r.reviews.push({ author_name, rating, text });
+        } else {
+          r.reviews = [
+            {
+              author_name,
+              rating,
+              text,
+            },
+          ];
+        }
       }
-})
+    });
     this.setState({
       author_name: "",
       email: "",
@@ -276,12 +280,13 @@ r.reviews=[
                 ) : (
                   this.state.ratings.map((p) => {
                     let photoRef = p.photos;
-           
+
                     var photoLink;
                     if (photoRef !== undefined) {
                       photoLink = p.photos[0].photo_reference;
                     } else {
-                      photoLink ="ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
+                      photoLink =
+                        "ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
                     }
 
                     return (
@@ -340,56 +345,58 @@ r.reviews=[
                                       }}
                                     >
                                       {/* // check condtion id */}
-                                      {p.reviews === undefined
-                                        ? (
-                  <div className="Jumbotron text-center">
-                    <p className="spinner">No reviews yet</p>
-                  </div>
-                )
-                                        : p.reviews.map((review,i) => (
-                                            <div key={i}>
-                                              <div key={p.place_id}>
-                                                <div className="row">
-                                                  <div className="pl-3">
-                                                    <Avatar
-                                                      color={Avatar.getRandomColor(
-                                                        ["red", "green"]
-                                                      )}
-                                                      name={review.author_name}
-                                                      size="40"
-                                                      round="50px"
-                                                    />
-
-                                                    <span
-                                                      className="font-weight-lighter ml-2"
-                                                      style={{
-                                                        fontSize: "15px",
-                                                      }}
-                                                    >
-                                                      {review.author_name}
-                                                    </span>
-                                                  </div>
-                                                </div>
-                                                <div className="text-warning">
-                                                  <StarRatings
-                                                    starRatedColor="yellow"
-                                                    rating={Number(review.rating)}
-                                                    starDimension="20px"
-                                                    starSpacing="1px"
-                                                    name="rating"
+                                      {p.reviews === undefined ? (
+                                        <div className="Jumbotron text-center">
+                                          <p className="spinner">
+                                            No reviews yet
+                                          </p>
+                                        </div>
+                                      ) : (
+                                        p.reviews.map((review, i) => (
+                                          <div key={i}>
+                                            <div key={p.place_id}>
+                                              <div className="row">
+                                                <div className="pl-3">
+                                                  <Avatar
+                                                    color={Avatar.getRandomColor(
+                                                      ["red", "green"]
+                                                    )}
+                                                    name={review.author_name}
+                                                    size="40"
+                                                    round="50px"
                                                   />
-                                                </div>
 
-                                                <p
-                                                  style={{ fontSize: "15px" }}
-                                                  className="text-muted"
-                                                  id={p.place_id}
-                                                >
-                                                  {review.text}
-                                                </p>
+                                                  <span
+                                                    className="font-weight-lighter ml-2"
+                                                    style={{
+                                                      fontSize: "15px",
+                                                    }}
+                                                  >
+                                                    {review.author_name}
+                                                  </span>
+                                                </div>
                                               </div>
+                                              <div className="text-warning">
+                                                <StarRatings
+                                                  starRatedColor="yellow"
+                                                  rating={Number(review.rating)}
+                                                  starDimension="20px"
+                                                  starSpacing="1px"
+                                                  name="rating"
+                                                />
+                                              </div>
+
+                                              <p
+                                                style={{ fontSize: "15px" }}
+                                                className="text-muted"
+                                                id={p.place_id}
+                                              >
+                                                {review.text}
+                                              </p>
                                             </div>
-                                          ))}
+                                          </div>
+                                        ))
+                                      )}
                                     </Element>
                                   </div>
                                 </div>
