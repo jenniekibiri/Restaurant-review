@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import Form from "../components/Form";
 import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
@@ -24,9 +23,27 @@ export class MapContainer extends Component {
       selectedPlace: {},
       mapClicked: false,
       mapCenter: mapCenter,
-      currentPosition: {},
       newRestaurants: [],
+        author_name: "", //user data
+      email: "",
+      isLoaded: false,
+      dataLoaded: false,
+      rating: 0,
+      text: "",
     };
+
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit (e){
+    e.preventDefault()
+    console.log('submit')
+  }
+ 
+
+  addRestaurant(){
+    console.log("clicked")
   }
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -60,15 +77,9 @@ export class MapContainer extends Component {
         newRestaurants,
       }));
     };
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        currentPosition: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        },
-      });
-    });
+  
   }
+  
   render() {
     return (
       <div
@@ -90,14 +101,13 @@ export class MapContainer extends Component {
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
               scaledSize: new window.google.maps.Size(50, 50),
             }}
-            position={this.state.currentPosition}
+            position={this.props.currentPosition}
           />
 
           {this.props.googleRestaurants === undefined
             ? console.log("loading")
             : this.props.googleRestaurants.map((p, i) => {
                 let photoRef = p.photos;
-
                 var photoLink;
                 if (photoRef !== undefined) {
                   photoLink = p.photos[0].photo_reference;
@@ -110,6 +120,7 @@ export class MapContainer extends Component {
                   <Marker
                     key={i}
                     name={p.name}
+                   
                     rating={p.rating}
                     photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
                     position={p.geometry.location}
@@ -120,8 +131,9 @@ export class MapContainer extends Component {
           {this.state.newRestaurants.map((newRestaurant, i) => (
             <Marker
               key={i}
+            
               position={newRestaurant}
-              onClick={this.addRestaurant}
+               onClick={this.onMarkerClick}
             />
           ))}
           {places.map((place, i) => (
@@ -130,6 +142,7 @@ export class MapContainer extends Component {
               name={place.restaurantName}
               rating={place.rating}
               photo={place.photo}
+              
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
             />
@@ -142,6 +155,7 @@ export class MapContainer extends Component {
               visible={this.state.showingInfoWindow}
             >
               <div>
+
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
                 <StarRatings
                   starRatedColor="yellow"
@@ -152,9 +166,28 @@ export class MapContainer extends Component {
                 />
                 <img
                   src={this.state.selectedPlace.photo}
+                 
                   className=" np-img-wrapper card-img np-img-expand"
                   alt="..."
                 />
+             
+               <form onSubmit={this.handleSubmit}>
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" placeholder="Enter email" id="email"/>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" placeholder="Enter password" id="pwd"/>
+  </div>
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"/> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+             
               </div>
             </InfoWindow>
           )}

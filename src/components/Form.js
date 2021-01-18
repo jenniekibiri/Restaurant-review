@@ -23,25 +23,15 @@ export class Form extends Component {
               id="recipient-name"
             />
           </div>
-          <div className="form-group ">
-            <input
-              onChange={this.props.handleChange}
-              value={this.props.email}
-              type="text"
-              className="form-control"
-              name="email"
-              placeholder="email"
-              id="recipient-name"
-            />
-          </div>
-          <div className="form-group ">
+          
+          <div className="form-group">
             <input
               onChange={this.props.handleChange}
               value={this.props.rating}
               type="number"
               className="form-control"
               name="rating"
-              placeholder="1"
+              placeholder="rating"
               id="recipient-name"
               min="1"
               max="5"

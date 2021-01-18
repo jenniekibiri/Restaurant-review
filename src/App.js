@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { Element } from "react-scroll";
 import Form from "./components/Form";
@@ -8,32 +9,30 @@ import StarRatings from "react-star-ratings";
 import Avatar from "react-avatar";
 import "./css/style.css";
 import places from "./places.json";
+import { StrictMode } from "react";
 require("dotenv").config();
 export class App extends Component {
   constructor(props) {
     super(props);
-    //state
+
     this.state = {
-      places: [], //json data
+      places: [],
       place: [],
       ratings: [],
-      author_name: "", //user data
-      email: "",
+      author_name: "", 
+      loaded:false,
+      currentPosition: {},
       isLoaded: false,
       dataLoaded: false,
-      rating: 0,
+      rating: 1,
       text: "",
       restaurantId: 0,
-      pic: "",
-      placeId: "",
     };
-    // ?why bind this
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getRestaurantId = this.getRestaurantId.bind(this);
   }
-  //onclick
 
   //handle change
   handleChange(e) {
@@ -54,11 +53,15 @@ export class App extends Component {
       ratings,
     } = this.state;
 
+    //add new reviews to hardcoded restaurants
     places.map((place) => {
-      if (restaurantId == place.id) {
-        place.ratings.push({ author_name, rating, text });
+      if (restaurantId === place.id) {
+        return place.ratings.push({ author_name, rating, text });
       }
+      return false;
     });
+
+    //add new reviews to google api restaurants
     ratings.map((r) => {
       if (restaurantId === r.place_id) {
         if (r.reviews !== undefined) {
@@ -73,34 +76,55 @@ export class App extends Component {
           ];
         }
       }
+      return false;
     });
+
     this.setState({
       author_name: "",
-      email: "",
       text: "",
       rating: 0,
     });
     e.preventDefault();
   };
 
+//get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
-
     this.setState((state) => ({
       restaurantId: id,
     }));
   }
 
   componentDidMount() {
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = `${process.env.REACT_APP_URL}`;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000",
-      },
-    })
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        currentPosition: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          
+        },
+        loaded:true
+      });
+      if (this.state.loaded===false){
+  console.log("loading")
+}else{
+  console.log(this.state.currentPosition)
+  console.log("cat")
+  fetch(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${
+        process.env.REACT_APP_GoogleMapsApiKey
+      }`,  
+      
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+        },
+        
+      }
+    )
       .then((response) => {
         return response.json();
       })
@@ -140,21 +164,34 @@ export class App extends Component {
       })
       .catch((err) => console.log(err));
 
+
+}
+    });
+
+    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+   
+
     this.setState({
       places: places,
     });
   }
 
-  render() {
-    const { isLoaded, place } = this.state;
 
+
+  render() {
+
+    const { isLoaded, place } = this.state;
     return (
       <div>
         <Navbar />
 
         <div className="row">
           <div className="col-md-8 pr-3 mt-4 pl-4 np-element ">
-            <MapContainer googleRestaurants={this.state.place} />
+            <MapContainer
+              currentPosition={this.state.currentPosition}
+              googleRestaurants={this.state.place}
+            />
           </div>
 
           <div className="col-md-4 mt-4   np-element ">
@@ -258,7 +295,7 @@ export class App extends Component {
                               >
                                 <Form
                                   author_name={this.state.author_name}
-                                  email={this.state.email}
+                              
                                   rating={this.state.rating}
                                   text={this.state.text}
                                   handleChange={this.handleChange}
@@ -424,7 +461,7 @@ export class App extends Component {
                                   >
                                     <Form
                                       name={this.state.author_name}
-                                      email={this.state.email}
+                                    
                                       rating={this.state.rating}
                                       text={this.state.text}
                                       handleChange={this.handleChange}
