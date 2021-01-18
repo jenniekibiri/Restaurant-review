@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../css/style.css";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import Form from "../components/Form"
+import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
 
@@ -36,6 +37,11 @@ export class MapContainer extends Component {
     });
   };
 
+  onInfoWindowClose = () =>
+    this.setState({
+        activeMarker: null,
+        showingInfoWindow: false
+    });
   componentDidMount() {
     this.onMapClicked = (props, map, e) => {
      
@@ -95,38 +101,69 @@ export class MapContainer extends Component {
 
           {this.props.googleRestaurants === undefined
             ? console.log("loading")
-            : this.props.googleRestaurants.map((p, i) => (
-                <Marker
+            : this.props.googleRestaurants.map((p, i) => {
+              let photoRef = p.photos;
+           
+                    var photoLink;
+                    if (photoRef !== undefined) {
+                      photoLink = p.photos[0].photo_reference;
+                    } else {
+                      photoLink ="ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
+                    }
+              
+return(
+   <Marker
                   key={i}
                   name={p.name}
+                  rating={p.rating}
+                 photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
                   position={p.geometry.location}
-                  onClick={this.onMarkerClick}
+               onClick={this.onMarkerClick}
                 />
-              ))}
+)
+  
+             
+          })}
           {this.state.newRestaurants.map((newRestaurant, i) => (
             <Marker
               key={i}
-              
               position={newRestaurant}
-              onClick={this.onMarkerClick}
+                 onClick={this.addRestaurant}
+              
             />
           ))}
          {places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
+            
+              rating={place.rating}
+              photo={place.photo}
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
             />
           ))}
 
-          {this.state.activeMarker && (
+        {this.state.showingInfoWindow === true && (
             <InfoWindow
               marker={this.state.activeMarker}
+              onCloseClick={this.onInfoWindowClose}
               visible={this.state.showingInfoWindow}
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
+ <StarRatings
+                                                    starRatedColor="yellow"
+                                                    rating={this.state.selectedPlace.rating}
+                                                    starDimension="20px"
+                                                    starSpacing="1px"
+                                                    name="rating"
+                                                  />
+                                                   <img
+                          src={this.state.selectedPlace.photo}
+                          className=" np-img-wrapper card-img np-img-expand"
+                          alt="..."
+                        />
                
               </div>
 
