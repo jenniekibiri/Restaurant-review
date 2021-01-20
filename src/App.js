@@ -123,8 +123,9 @@ this.setState({
       });
       if (this.state.loaded === false) {
       } else {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
-          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+           proxyurl+`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
           {
             method: "GET",
@@ -142,9 +143,9 @@ this.setState({
 
             results.map((result) => {
               let placeid = result.place_id;
-
+   
               fetch(
-                `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+                proxyurl+`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
                 {
                   method: "GET",
                   headers: {
@@ -175,7 +176,7 @@ this.setState({
       }
     });
 
-    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+ 
     this.setState({
       places: places,
     });
