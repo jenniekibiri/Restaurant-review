@@ -1,6 +1,7 @@
-
 import React, { Component } from "react";
 import { Element } from "react-scroll";
+import sortBy from "lodash/sortBy";
+import ReactStars from "react-rating-stars-component";
 import Form from "./components/Form";
 import Ratings from "./components/Ratings";
 import MapContainer from "./components/MapContainer";
@@ -9,29 +10,45 @@ import StarRatings from "react-star-ratings";
 import Avatar from "react-avatar";
 import "./css/style.css";
 import places from "./places.json";
-import { StrictMode } from "react";
 require("dotenv").config();
 export class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       places: [],
       place: [],
       ratings: [],
-      author_name: "", 
-      loaded:false,
+      author_name: "",
+      loaded: false,
       currentPosition: {},
       isLoaded: false,
       dataLoaded: false,
       rating: 1,
       text: "",
       restaurantId: 0,
+      minRating: 1,
+      ratingClicked: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getRestaurantId = this.getRestaurantId.bind(this);
+    this.ratingChanged = this.ratingChanged.bind(this);
+       this.handlePlaces = this.handlePlaces.bind(this);
+  }
+
+  ratingChanged = (newRating) => {
+    this.setState({
+      minRating: newRating,
+      ratingClicked: true,
+    });
+  };
+  
+
+  handlePlaces(places){
+this.setState({
+  places
+})
   }
 
   //handle change
@@ -87,7 +104,7 @@ export class App extends Component {
     e.preventDefault();
   };
 
-//get restaurant id on click
+  //get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
     this.setState((state) => ({
@@ -96,101 +113,118 @@ export class App extends Component {
   }
 
   componentDidMount() {
-
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentPosition: {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-          
         },
-        loaded:true
+        loaded: true,
       });
-      if (this.state.loaded===false){
-  console.log("loading")
-}else{
-  console.log(this.state.currentPosition)
-  console.log("cat")
-  fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${
-        process.env.REACT_APP_GoogleMapsApiKey
-      }`,  
-      
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-        },
-        
-      }
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let results = data.results;
+      if (this.state.loaded === false) {
+      } else {
+        fetch(
+          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
-        results.map((result) => {
-          let placeid = result.place_id;
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Access-Control-Allow-Origin": "http://localhost:3000",
+            },
+          }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            let results = data.results;
 
-          fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
-            {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "http://localhost:3000",
-              },
-            }
-          )
-            .then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              const { ratings } = this.state;
-              ratings.push(data.result);
-              this.setState({
-                ratings,
-                dataLoaded: true,
-              });
+            results.map((result) => {
+              let placeid = result.place_id;
+
+              fetch(
+                `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+                {
+                  method: "GET",
+                  headers: {
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "http://localhost:3000",
+                  },
+                }
+              )
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  const { ratings } = this.state;
+                  ratings.push(data.result);
+                  this.setState({
+                    ratings,
+                    dataLoaded: true,
+                  });
+                });
             });
-        });
 
-        this.setState({
-          isLoaded: true,
-          place: data.results,
-        });
-      })
-      .catch((err) => console.log(err));
-
-
-}
+            this.setState({
+              isLoaded: true,
+              place: data.results,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
     });
 
     // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-   
-
     this.setState({
       places: places,
     });
   }
 
-
-
   render() {
+    
+    const {
+      isLoaded,
+      place,
+      places,
+      minRating,
+      ratings,
+      ratingClicked,
+    } = this.state;
+  
+    const filteredCoded = [];
+    const filterGRestaurants = [];
 
-    const { isLoaded, place } = this.state;
+    places.forEach((p) => {
+      if (ratingClicked === false) {
+         filteredCoded.push(p);
+
+      }
+
+      if (p.rating == minRating) {
+        filteredCoded.push(p);
+      }
+    });
+
+    
+    if (isLoaded == true) {
+      ratings.forEach((rating) => {
+        
+        if (rating.rating == minRating) {
+           return filterGRestaurants.push(rating);
+        }
+      });
+    }
     return (
       <div>
         <Navbar />
-
         <div className="row">
           <div className="col-md-8 pr-3 mt-4 pl-4 np-element ">
             <MapContainer
               currentPosition={this.state.currentPosition}
               googleRestaurants={this.state.place}
+              places={this.state.places}
+              handlePlaces={this.handlePlaces}
             />
           </div>
 
@@ -209,7 +243,19 @@ export class App extends Component {
                   marginBottom: "0px",
                 }}
               >
-                {this.state.places.map((place) => (
+                <div className="buttonStuff d-flex justify-content-end align-items-center ">
+                  <p className="mb-0 mr-1">Filter</p>
+                  <ReactStars
+                    count={5}
+                    onChange={this.ratingChanged}
+                    isHalf={true}
+
+                    size={24}
+                    activeColor="#ffd700"
+                  />
+                </div>
+                {
+                filteredCoded.map((place) => (
                   <div
                     className=" mb-3 np-element np-shadow-double"
                     id={place.id}
@@ -228,6 +274,13 @@ export class App extends Component {
                         <div className="card-body">
                           <h5 ref="restaurantName">{place.restaurantName}</h5>
                           <div className=" row ml-2  text-warning "></div>
+                          <StarRatings
+                            starRatedColor="yellow"
+                            rating={Number(place.rating)}
+                            starDimension="20px"
+                            starSpacing="1px"
+                            name="rating"
+                          />
                           <span
                             className="mb-4 ml-2"
                             style={{ fontSize: "15px" }}
@@ -295,7 +348,6 @@ export class App extends Component {
                               >
                                 <Form
                                   author_name={this.state.author_name}
-                              
                                   rating={this.state.rating}
                                   text={this.state.text}
                                   handleChange={this.handleChange}
@@ -315,9 +367,9 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                  this.state.ratings.map((p) => {
+                 filterGRestaurants
+                  .map((p) => {
                     let photoRef = p.photos;
-
                     var photoLink;
                     if (photoRef !== undefined) {
                       photoLink = p.photos[0].photo_reference;
@@ -345,6 +397,13 @@ export class App extends Component {
                             <div className="card-body">
                               <h5 ref="restaurantName">{p.name}</h5>
                               <div className=" row ml-2  text-warning "></div>
+                              <StarRatings
+                                starRatedColor="yellow"
+                                rating={Number(p.rating)}
+                                starDimension="20px"
+                                starSpacing="1px"
+                                name="rating"
+                              />
                               <span
                                 className="mb-4 ml-2"
                                 style={{ fontSize: "15px" }}
@@ -461,7 +520,6 @@ export class App extends Component {
                                   >
                                     <Form
                                       name={this.state.author_name}
-                                    
                                       rating={this.state.rating}
                                       text={this.state.text}
                                       handleChange={this.handleChange}

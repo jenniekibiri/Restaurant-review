@@ -33,5 +33,12 @@ body {
 
    
 }
+.buttonStuff :focus{
+    outline: none;
+}
+
+.img-fluid{
+    height: 100px !important;
+}
 
 

@@ -5,10 +5,7 @@ import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
 
-const mapCenter = {
-  lat: -1.2845056,
-  lng: 36.817786,
-};
+
 
 const mapStyles = {
   height: "100vh",
@@ -22,29 +19,26 @@ export class MapContainer extends Component {
       activeMarker: {},
       selectedPlace: {},
       mapClicked: false,
-      mapCenter: mapCenter,
       newRestaurants: [],
-        author_name: "", //user data
+      author_name: "", //user data
       email: "",
       isLoaded: false,
+      lat:"",
+      lng:"",
+      name:"",
+      address:"",
+      newRating:0,
       dataLoaded: false,
+      showMarker:false,
       rating: 0,
+      showForm: false,
       text: "",
     };
-
-
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit (e){
-    e.preventDefault()
-    console.log('submit')
-  }
- 
 
-  addRestaurant(){
-    console.log("clicked")
-  }
   onMarkerClick = (props, marker) => {
     this.setState({
       selectedPlace: props,
@@ -58,29 +52,60 @@ export class MapContainer extends Component {
       activeMarker: null,
       showingInfoWindow: false,
     });
-  componentDidMount() {
-    this.onMapClicked = (props, map, e) => {
-      const { newRestaurants } = this.state;
 
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null,
-        });
-      }
-      let lat = e.latLng.lat();
-      let lng = e.latLng.lng();
-      newRestaurants.push({ lat, lng });
+  onMapClicked = (props, map, e) => {
+    this.setState({
+      showForm: true,
+      lat:e.latLng.lat(),
+      lng:e.latLng.lng()
+    });
+    let lat = e.latLng.lat();
+    let lng = e.latLng.lng();
 
-      this.setState((prevState) => ({
-        mapClicked: true,
-        newRestaurants,
-      }));
-    };
-  
+
+    const { newRestaurants } = this.state;
+
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null,
+
+      });
+    }
+    newRestaurants.push({ lat, lng });
+
+    this.setState((prevState) => ({
+      mapClicked: true,
+      newRestaurants,
+    }));
+  };
+    handleChange(e) {
+    this.setState({
+      //handle events for all fields
+      [e.target.name]: e.target.value,
+    });
   }
+
+ handleSubmit =(e)=>{
+
+   const {newRating,name,address,newRestaurants,lat,lng}=this.state
+    e.preventDefault()
+ newRestaurants.push(newRating,name,address)
+ this.props.places.push({ lat, long:lng,rating:newRating,restaurantName:name,address,photo:'https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',ratings:[] });
+this.props.handlePlaces(this.props.places)
+       
+        this.setState({
+          showForm:false,
+          showMarker:true,
+          newRating:1,
+          name:"",
+          address:""
+        })
+    }
+
   
   render() {
+  
     return (
       <div
         style={{ height: "10vh", width: "100%" }}
@@ -90,7 +115,7 @@ export class MapContainer extends Component {
           google={this.props.google}
           style={mapStyles}
           zoom={13}
-          initialCenter={this.state.mapCenter}
+          initialCenter={this.props.currentPosition}
           onClick={this.onMapClicked}
         >
           <Marker
@@ -120,7 +145,6 @@ export class MapContainer extends Component {
                   <Marker
                     key={i}
                     name={p.name}
-                   
                     rating={p.rating}
                     photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
                     position={p.geometry.location}
@@ -128,21 +152,72 @@ export class MapContainer extends Component {
                   />
                 );
               })}
-          {this.state.newRestaurants.map((newRestaurant, i) => (
+
+          {this.state.showForm ===true ? (
+            <div style={{ position: "relative" }} className="col-md-4 ml-5 ">
+             <form onSubmit={this.handleSubmit} className="np-element mt-2">
+  <div className="form-group">
+    
+    <input type="text" className="form-control" placeholder="Restaurant Name"
+     onChange={this.handleChange}
+     name="name"
+              value={this.state.name}
+    id="name"/>
+  </div>
+  <div className="form-group">
+  
+    <input type="text" className="form-control" placeholder="Addresss"
+     onChange={this.handleChange}
+     name="address"
+              value={this.state.address}
+    id="address"/>
+  </div>
+   <div className="form-group">
+  
+    <input type="number" min="1" max="5" className="form-control" placeholder="rating"
+     onChange={this.handleChange}
+     name="newRating"
+              value={this.state.newRating}
+    id="newRating"/>
+  </div>
+ 
+  <button type="submit" className="btn btn-primary">Submit</button>
+</form>
+            </div>
+          ) : (
+            ""
+          )}
+   {/* { 
+this.state.showMarker&&
+   this.state.newRestaurants.map((newRestaurant, i) => {
+              
+
+                return (
+                  <Marker
+                    key={i}
+                    name={this.state.name}
+                    position={newRestaurant}
+                    onClick={this.onMarkerClick}
+                  />
+                );
+              })} */}
+
+             {this.props.places.map((place, i) => (
             <Marker
               key={i}
-            
-              position={newRestaurant}
-               onClick={this.onMarkerClick}
+              name={place.restaurantName}
+              rating={place.rating}
+              photo={place.photo}
+              onClick={this.onMarkerClick}
+              position={{ lat: place.lat, lng: place.long }}
             />
-          ))}
+          ))}  
           {places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
               rating={place.rating}
               photo={place.photo}
-              
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
             />
@@ -155,39 +230,19 @@ export class MapContainer extends Component {
               visible={this.state.showingInfoWindow}
             >
               <div>
-
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                <StarRatings
+                {/* <StarRatings
                   starRatedColor="yellow"
-                  rating={this.state.selectedPlace.rating}
+                  rating={}
                   starDimension="20px"
                   starSpacing="1px"
                   name="rating"
-                />
+                /> */}
                 <img
                   src={this.state.selectedPlace.photo}
-                 
-                  className=" np-img-wrapper card-img np-img-expand"
+                  className="  img-fluid InfoImage " 
                   alt="..."
                 />
-             
-               <form onSubmit={this.handleSubmit}>
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" placeholder="Enter email" id="email"/>
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" placeholder="Enter password" id="pwd"/>
-  </div>
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="checkbox"/> Remember me
-    </label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-             
               </div>
             </InfoWindow>
           )}

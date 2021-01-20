@@ -12,6 +12,7 @@
     "eslint-config-prettier": "^7.0.0",
     "google-map-react": "^2.1.7",
     "google-maps-react": "^2.0.6",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-avatar": "^3.9.7",
