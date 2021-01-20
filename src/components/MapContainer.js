@@ -87,7 +87,6 @@ export class MapContainer extends Component {
   }
 
  handleSubmit =(e)=>{
-
    const {newRating,name,address,newRestaurants,lat,lng}=this.state
     e.preventDefault()
  newRestaurants.push(newRating,name,address)
