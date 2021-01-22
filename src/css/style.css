@@ -41,5 +41,7 @@ body {
     height: 200px !important;
     width: 80%;
 }
-
+.filter{
+    cursor: pointer;
+}
 

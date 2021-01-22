@@ -35,17 +35,14 @@ export class App extends Component {
     this.getRestaurantId = this.getRestaurantId.bind(this);
     this.ratingChanged = this.ratingChanged.bind(this);
     this.handlePlaces = this.handlePlaces.bind(this);
-     this.clearFilter = this.clearFilter.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
   }
- clearFilter(e){
-   
-  this.setState({
-    ratingClicked:false,
-    minRating:""
-  })
-   
-
- }
+  clearFilter(e) {
+    this.setState({
+      ratingClicked: false,
+      minRating: "",
+    });
+  }
   ratingChanged = (newRating) => {
     this.setState({
       minRating: newRating,
@@ -208,18 +205,15 @@ export class App extends Component {
     let filterGRestaurants = [];
 
     if (isLoaded === true) {
-    if(ratingClicked==false){
-       filterGRestaurants=ratings
-    }
-      
-  
-    ratings.forEach((rating) => {
+      if (ratingClicked == false) {
+        filterGRestaurants = ratings;
+      }
+
+      ratings.forEach((rating) => {
         if (rating.rating == minRating) {
           return filterGRestaurants.push(rating);
         }
       });
-
-     
     }
 
     places.forEach((p) => {
@@ -259,16 +253,16 @@ export class App extends Component {
                   overflow: "scroll",
                   marginBottom: "0px",
                 }}
-              > 
-{
-                    ratingClicked ===true ?(
-                      <button className="btn btn-success" onClick={this.clearFilter}>clear</button>
-                    ):("")
-                  }
+              >
                 <div className="buttonStuff d-flex justify-content-end align-items-center ">
-                  <p className="mb-0 mr-1">Filter</p>
-                  
-                 
+                  {ratingClicked === true ? (
+                    <span className="material-icons filter" onClick={this.clearFilter}>
+                      cached
+                    </span>
+                  ) : (
+                    <p className="mb-0 mr-1">Filter</p>
+                  )}
+
                   <ReactStars
                     count={5}
                     onChange={this.ratingChanged}
@@ -304,12 +298,9 @@ export class App extends Component {
                             starSpacing="1px"
                             name="rating"
                           />
-                          <span
-                            className="mb-4 ml-2"
-                            style={{ fontSize: "15px" }}
-                          >
+                          <p className="mb-4 ml-2" style={{ fontSize: "15px" }}>
                             {place.address}{" "}
-                          </span>
+                          </p>
 
                           <div className="row mt-3">
                             <div className="dropdown">
@@ -390,7 +381,7 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                 filterGRestaurants.map((p) => {
+                  filterGRestaurants.map((p) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {
