@@ -230,7 +230,7 @@ export class App extends Component {
       <div>
         <Navbar />
         <div className="row">
-          <div className="col-md-8 pr-3 mt-4 pl-4 np-element ">
+          <div className="col-md-8 pr-3 mt-4 pl-3 np-element ">
             <MapContainer
               currentPosition={this.state.currentPosition}
               googleRestaurants={this.state.place}
@@ -239,22 +239,11 @@ export class App extends Component {
             />
           </div>
 
-          <div className="col-md-4 mt-4   np-element ">
-            <div className="row mt-5">
+          <div className="col-md-4  pl-5  cards np-element ">
+            <div className="row mt-5 ">
               {/* card */}
-
-              <Element
-                name="test7"
-                className="element"
-                id="containerElement"
-                style={{
-                  position: "relative",
-                  height: "650px",
-                  overflow: "scroll",
-                  marginBottom: "0px",
-                }}
-              >
-                <div className="buttonStuff d-flex justify-content-end align-items-center ">
+             
+          <div className="buttonStuff ml-3 d-flex justify-content-end align-items-center ">
                   {ratingClicked === true ? (
                     <span className="material-icons filter" onClick={this.clearFilter}>
                       cached
@@ -271,6 +260,19 @@ export class App extends Component {
                     activeColor="#ffd700"
                   />
                 </div>
+              <Element
+                name="test7"
+                id="containerElement"
+                style={{
+                  position: "relative",
+                  height: "650px",
+                  overflow: "scroll",
+                  marginBottom: "0px",
+                }}
+
+                
+              >
+               
 
                 {filteredCoded.map((place) => (
                   <div

@@ -36,6 +36,9 @@ body {
 .buttonStuff :focus{
     outline: none;
 }
+.logo{
+    height: 30px;
+}
 
 .img-fluid{
     height: 200px !important;
@@ -45,3 +48,9 @@ body {
     cursor: pointer;
 }
 
+@media only screen and (max-width: 600px) {
+
+  .cards{
+      margin-top: 420px;
+  }
+}
