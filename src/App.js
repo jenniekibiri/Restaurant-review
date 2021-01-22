@@ -128,7 +128,7 @@ export class App extends Component {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
           proxyurl +
-            `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
           {
             method: "GET",
@@ -250,7 +250,8 @@ export class App extends Component {
                   overflow: "scroll",
                   marginBottom: "0px",
                 }}
-              >
+              > 
+
                 <div className="buttonStuff d-flex justify-content-end align-items-center ">
                   <p className="mb-0 mr-1">Filter</p>
 
