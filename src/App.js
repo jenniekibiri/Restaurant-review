@@ -212,10 +212,12 @@ this.setState({
     });
 
     
-    if (isLoaded == true) {
+    if (isLoaded === true) {
+      console.log(ratings)
+
       ratings.forEach((rating) => {
         
-        if (rating.rating == minRating) {
+        if (rating.rating >= minRating) {
            return filterGRestaurants.push(rating);
         }
       });
