@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../css/style.css";
+import uuid from 'react-uuid'
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import StarRatings from "react-star-ratings";
 import places from "../places.json";
@@ -90,7 +91,7 @@ export class MapContainer extends Component {
    const {newRating,name,address,newRestaurants,lat,lng}=this.state
     e.preventDefault()
  newRestaurants.push(newRating,name,address)
- this.props.places.push({ lat, long:lng,rating:newRating,restaurantName:name,address,photo:'https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',ratings:[] });
+ this.props.places.push({ lat, long:lng,rating:newRating,restaurantName:name,address,photo:'https://images.pexels.com/photos/2448730/pexels-photo-2448730.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',ratings:[],id:uuid() });
 this.props.handlePlaces(this.props.places)
        
         this.setState({

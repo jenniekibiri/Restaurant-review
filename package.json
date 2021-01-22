@@ -22,7 +22,8 @@
     "react-scripts": "3.4.3",
     "react-scroll": "^1.8.1",
     "react-scrollspy": "^3.4.3",
-    "react-star-ratings": "^2.3.0"
+    "react-star-ratings": "^2.3.0",
+    "react-uuid": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

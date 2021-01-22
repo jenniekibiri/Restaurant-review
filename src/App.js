@@ -72,15 +72,18 @@ this.setState({
 
     //add new reviews to hardcoded restaurants
     places.map((place) => {
-      if (restaurantId === place.id) {
-        return place.ratings.push({ author_name, rating, text });
+    console.log(place.id)
+    
+      if (restaurantId == place.id) {
+
+         place.ratings.push({ author_name, rating, text });
       }
       return false;
     });
 
     //add new reviews to google api restaurants
     ratings.map((r) => {
-      if (restaurantId === r.place_id) {
+      if (Number(restaurantId) === r.place_id) {
         if (r.reviews !== undefined) {
           r.reviews.push({ author_name, rating, text });
         } else {
@@ -107,6 +110,7 @@ this.setState({
   //get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
+    console.log('clicked id:'+id)
     this.setState((state) => ({
       restaurantId: id,
     }));
