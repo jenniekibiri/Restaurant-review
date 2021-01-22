@@ -34,7 +34,7 @@ export class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getRestaurantId = this.getRestaurantId.bind(this);
     this.ratingChanged = this.ratingChanged.bind(this);
-       this.handlePlaces = this.handlePlaces.bind(this);
+    this.handlePlaces = this.handlePlaces.bind(this);
   }
 
   ratingChanged = (newRating) => {
@@ -43,12 +43,11 @@ export class App extends Component {
       ratingClicked: true,
     });
   };
-  
 
-  handlePlaces(places){
-this.setState({
-  places
-})
+  handlePlaces(places) {
+    this.setState({
+      places,
+    });
   }
 
   //handle change
@@ -72,11 +71,10 @@ this.setState({
 
     //add new reviews to hardcoded restaurants
     places.map((place) => {
-    console.log(place.id)
-    
-      if (restaurantId == place.id) {
+      console.log(place.id);
 
-         place.ratings.push({ author_name, rating, text });
+      if (restaurantId == place.id) {
+        place.ratings.push({ author_name, rating, text });
       }
       return false;
     });
@@ -110,7 +108,7 @@ this.setState({
   //get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
-    console.log('clicked id:'+id)
+    console.log("clicked id:" + id);
     this.setState((state) => ({
       restaurantId: id,
     }));
@@ -129,7 +127,8 @@ this.setState({
       } else {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
-           proxyurl+`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+          proxyurl +
+            `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=500&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
           {
             method: "GET",
@@ -147,9 +146,10 @@ this.setState({
 
             results.map((result) => {
               let placeid = result.place_id;
-   
+
               fetch(
-                proxyurl+`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+                proxyurl +
+                  `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
                 {
                   method: "GET",
                   headers: {
@@ -180,14 +180,12 @@ this.setState({
       }
     });
 
- 
     this.setState({
       places: places,
     });
   }
 
   render() {
-    
     const {
       isLoaded,
       place,
@@ -196,14 +194,28 @@ this.setState({
       ratings,
       ratingClicked,
     } = this.state;
-  
+
     const filteredCoded = [];
-    const filterGRestaurants = [];
+    let filterGRestaurants = [];
+
+    if (isLoaded === true) {
+    if(ratingClicked==false){
+       filterGRestaurants=ratings
+    }
+      
+  
+    ratings.forEach((rating) => {
+        if (rating.rating == minRating) {
+          return filterGRestaurants.push(rating);
+        }
+      });
+
+     
+    }
 
     places.forEach((p) => {
       if (ratingClicked === false) {
-         filteredCoded.push(p);
-
+        filteredCoded.push(p);
       }
 
       if (p.rating == minRating) {
@@ -211,17 +223,6 @@ this.setState({
       }
     });
 
-    
-    if (isLoaded === true) {
-      console.log(ratings)
-
-      ratings.forEach((rating) => {
-        
-        if (rating.rating >= minRating) {
-           return filterGRestaurants.push(rating);
-        }
-      });
-    }
     return (
       <div>
         <Navbar />
@@ -252,17 +253,17 @@ this.setState({
               >
                 <div className="buttonStuff d-flex justify-content-end align-items-center ">
                   <p className="mb-0 mr-1">Filter</p>
+
                   <ReactStars
                     count={5}
                     onChange={this.ratingChanged}
                     isHalf={true}
-
                     size={24}
                     activeColor="#ffd700"
                   />
                 </div>
-                {
-                filteredCoded.map((place) => (
+
+                {filteredCoded.map((place) => (
                   <div
                     className=" mb-3 np-element np-shadow-double"
                     id={place.id}
@@ -374,8 +375,7 @@ this.setState({
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                 filterGRestaurants
-                  .map((p) => {
+                 filterGRestaurants.map((p) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {
@@ -406,7 +406,7 @@ this.setState({
                               <div className=" row ml-2  text-warning "></div>
                               <StarRatings
                                 starRatedColor="yellow"
-                                rating={Number(p.rating)}
+                                rating={p.rating}
                                 starDimension="20px"
                                 starSpacing="1px"
                                 name="rating"
