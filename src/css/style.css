@@ -38,7 +38,8 @@ body {
 }
 
 .img-fluid{
-    height: 100px !important;
+    height: 200px !important;
+    width: 80%;
 }
 
 

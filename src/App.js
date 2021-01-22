@@ -35,8 +35,17 @@ export class App extends Component {
     this.getRestaurantId = this.getRestaurantId.bind(this);
     this.ratingChanged = this.ratingChanged.bind(this);
     this.handlePlaces = this.handlePlaces.bind(this);
+     this.clearFilter = this.clearFilter.bind(this);
   }
+ clearFilter(e){
+   
+  this.setState({
+    ratingClicked:false,
+    minRating:""
+  })
+   
 
+ }
   ratingChanged = (newRating) => {
     this.setState({
       minRating: newRating,
@@ -251,10 +260,15 @@ export class App extends Component {
                   marginBottom: "0px",
                 }}
               > 
-
+{
+                    ratingClicked ===true ?(
+                      <button className="btn btn-success" onClick={this.clearFilter}>clear</button>
+                    ):("")
+                  }
                 <div className="buttonStuff d-flex justify-content-end align-items-center ">
                   <p className="mb-0 mr-1">Filter</p>
-
+                  
+                 
                   <ReactStars
                     count={5}
                     onChange={this.ratingChanged}

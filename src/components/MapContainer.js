@@ -240,7 +240,7 @@ this.state.showMarker&&
                 /> */}
                 <img
                   src={this.state.selectedPlace.photo}
-                  className="  img-fluid InfoImage " 
+                  className="  img-fluid  " 
                   alt="..."
                 />
               </div>
