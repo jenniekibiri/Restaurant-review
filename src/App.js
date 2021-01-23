@@ -7,6 +7,7 @@ import "./css/style.css";
 import places from "./places.json";
 import GoogleApiCard from "./components/GoogleApiCard";
 import CustomData from "./components/CustomData";
+import Filter from "./components/Filter";
 require("dotenv").config();
 export class App extends Component {
   constructor(props) {
@@ -240,26 +241,11 @@ export class App extends Component {
             <div className="row mt-5 ">
               {/* card */}
 
-              <div className="buttonStuff ml-3 d-flex justify-content-end align-items-center ">
-                {ratingClicked === true ? (
-                  <span
-                    className="material-icons filter"
-                    onClick={this.clearFilter}
-                  >
-                    cached
-                  </span>
-                ) : (
-                  <p className="mb-0 mr-1">Filter</p>
-                )}
-
-                <ReactStars
-                  count={5}
-                  onChange={this.ratingChanged}
-                  isHalf={true}
-                  size={24}
-                  activeColor="#ffd700"
-                />
-              </div>
+              <Filter
+               ratingClicked={ratingClicked}
+               ratingChanged={this.ratingChanged}
+               clearFilter={this.clearFilter} 
+              />
               <Element
                 name="test7"
                 id="containerElement"
