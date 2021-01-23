@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import "../css/style.css";
-import uuid from 'react-uuid'
+import uuid from "react-uuid";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
-
-
 
 const mapStyles = {
   height: "100vh",
@@ -24,13 +22,13 @@ export class MapContainer extends Component {
       author_name: "", //user data
       email: "",
       isLoaded: false,
-      lat:"",
-      lng:"",
-      name:"",
-      address:"",
-      newRating:0,
+      lat: "",
+      lng: "",
+      name: "",
+      address: "",
+      newRating: 0,
       dataLoaded: false,
-      showMarker:false,
+      showMarker: false,
       rating: 0,
       showForm: false,
       text: "",
@@ -38,7 +36,6 @@ export class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
 
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -57,12 +54,11 @@ export class MapContainer extends Component {
   onMapClicked = (props, map, e) => {
     this.setState({
       showForm: true,
-      lat:e.latLng.lat(),
-      lng:e.latLng.lng()
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
     });
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
-
 
     const { newRestaurants } = this.state;
 
@@ -70,7 +66,6 @@ export class MapContainer extends Component {
       this.setState({
         showingInfoWindow: false,
         activeMarker: null,
-
       });
     }
     newRestaurants.push({ lat, lng });
@@ -80,32 +75,39 @@ export class MapContainer extends Component {
       newRestaurants,
     }));
   };
-    handleChange(e) {
+  handleChange(e) {
     this.setState({
       //handle events for all fields
       [e.target.name]: e.target.value,
     });
   }
 
- handleSubmit =(e)=>{
-   const {newRating,name,address,newRestaurants,lat,lng}=this.state
-    e.preventDefault()
- newRestaurants.push(newRating,name,address)
- this.props.places.push({ lat, long:lng,rating:newRating,restaurantName:name,address,photo:'https://source.unsplash.com/400x400/?hotel,restaurant',ratings:[],id:uuid() });
-this.props.handlePlaces(this.props.places)
-       
-        this.setState({
-          showForm:false,
-          showMarker:true,
-          newRating:1,
-          name:"",
-          address:""
-        })
-    }
+  handleSubmit = (e) => {
+    const { newRating, name, address, newRestaurants, lat, lng } = this.state;
+    e.preventDefault();
+    newRestaurants.push(newRating, name, address);
+    this.props.places.push({
+      lat,
+      long: lng,
+      rating: newRating,
+      restaurantName: name,
+      address,
+      photo: "https://source.unsplash.com/400x400/?hotel,restaurant",
+      ratings: [],
+      id: uuid(),
+    });
+    this.props.handlePlaces(this.props.places);
 
+    this.setState({
+      showForm: false,
+      showMarker: true,
+      newRating: 1,
+      name: "",
+      address: "",
+    });
+  };
 
   render() {
-  
     return (
       <div
         style={{ height: "10vh", width: "100%" }}
@@ -153,42 +155,55 @@ this.props.handlePlaces(this.props.places)
                 );
               })}
 
-          {this.state.showForm ===true ? (
+          {this.state.showForm === true ? (
             <div style={{ position: "relative" }} className="col-md-4 ml-5 ">
-             <form onSubmit={this.handleSubmit} className="np-element mt-2">
-  <div className="form-group">
-    
-    <input type="text" className="form-control" placeholder="Restaurant Name"
-     onChange={this.handleChange}
-     name="name"
-              value={this.state.name}
-    id="name"/>
-  </div>
-  <div className="form-group">
-  
-    <input type="text" className="form-control" placeholder="Addresss"
-     onChange={this.handleChange}
-     name="address"
-              value={this.state.address}
-    id="address"/>
-  </div>
-   <div className="form-group">
-  
-    <input type="number" min="1" max="5" className="form-control" placeholder="rating"
-     onChange={this.handleChange}
-     name="newRating"
-              value={this.state.newRating}
-    id="newRating"/>
-  </div>
- 
-  <button type="submit" className="btn btn-primary">Submit</button>
-</form>
+              <form onSubmit={this.handleSubmit} className="np-element mt-2">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Restaurant Name"
+                    onChange={this.handleChange}
+                    name="name"
+                    value={this.state.name}
+                    id="name"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Addresss"
+                    onChange={this.handleChange}
+                    name="address"
+                    value={this.state.address}
+                    id="address"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="number"
+                    min="1"
+                    max="5"
+                    className="form-control"
+                    placeholder="rating"
+                    onChange={this.handleChange}
+                    name="newRating"
+                    value={this.state.newRating}
+                    id="newRating"
+                  />
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </form>
             </div>
           ) : (
             ""
           )}
 
-             {this.props.places.map((place, i) => (
+          {this.props.places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
@@ -197,7 +212,7 @@ this.props.handlePlaces(this.props.places)
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
             />
-          ))}  
+          ))}
           {places.map((place, i) => (
             <Marker
               key={i}
@@ -226,7 +241,7 @@ this.props.handlePlaces(this.props.places)
                 />
                 <img
                   src={this.state.selectedPlace.photo}
-                  className="  img-fluid  " 
+                  className="  img-fluid  "
                   alt="..."
                 />
               </div>

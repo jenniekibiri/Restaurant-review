@@ -4,8 +4,6 @@ export class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    
-    
   }
 
   render() {
@@ -23,7 +21,7 @@ export class Form extends Component {
               id="recipient-name"
             />
           </div>
-          
+
           <div className="form-group">
             <input
               onChange={this.props.handleChange}

@@ -242,9 +242,9 @@ export class App extends Component {
               {/* card */}
 
               <Filter
-               ratingClicked={ratingClicked}
-               ratingChanged={this.ratingChanged}
-               clearFilter={this.clearFilter} 
+                ratingClicked={ratingClicked}
+                ratingChanged={this.ratingChanged}
+                clearFilter={this.clearFilter}
               />
               <Element
                 name="test7"
