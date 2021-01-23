@@ -41,7 +41,7 @@ body {
 }
 
 .img-fluid{
-    height: 200px !important;
+    height: 150px !important;
     width: 80%;
 }
 .filter{
@@ -51,6 +51,6 @@ body {
 @media only screen and (max-width: 600px) {
 
   .cards{
-      margin-top: 420px;
+      margin-top: 280px;
   }
 }

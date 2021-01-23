@@ -103,7 +103,7 @@ this.props.handlePlaces(this.props.places)
         })
     }
 
-  
+
   render() {
   
     return (
@@ -187,20 +187,6 @@ this.props.handlePlaces(this.props.places)
           ) : (
             ""
           )}
-   {/* { 
-this.state.showMarker&&
-   this.state.newRestaurants.map((newRestaurant, i) => {
-              
-
-                return (
-                  <Marker
-                    key={i}
-                    name={this.state.name}
-                    position={newRestaurant}
-                    onClick={this.onMarkerClick}
-                  />
-                );
-              })} */}
 
              {this.props.places.map((place, i) => (
             <Marker
@@ -231,13 +217,13 @@ this.state.showMarker&&
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                {/* <StarRatings
+                <StarRatings
                   starRatedColor="yellow"
-                  rating={}
+                  rating={this.state.selectedPlace.rating}
                   starDimension="20px"
                   starSpacing="1px"
                   name="rating"
-                /> */}
+                />
                 <img
                   src={this.state.selectedPlace.photo}
                   className="  img-fluid  " 
