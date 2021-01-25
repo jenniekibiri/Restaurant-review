@@ -41,8 +41,8 @@ body {
 }
 
 .img-fluid{
-    height: 150px !important;
-    width: 80%;
+    height: 50% !important;
+    width: 50%;
 }
 .filter{
     cursor: pointer;
@@ -53,4 +53,7 @@ body {
   .cards{
       margin-top: 280px;
   }
+}
+.infoWindow{
+    width: 100%;
 }

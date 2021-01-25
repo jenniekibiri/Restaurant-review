@@ -7,7 +7,7 @@ import places from "../places.json";
 require("dotenv").config();
 
 const mapStyles = {
-  height: "100vh",
+  height: "93%",
   width: "93%",
 };
 export class MapContainer extends Component {
@@ -110,7 +110,7 @@ export class MapContainer extends Component {
   render() {
     return (
       <div
-        style={{ height: "10vh", width: "100%" }}
+        style={{ height: "100%", width: "100%" }}
         className="card-img p-2  mt-5"
       >
         <Map
@@ -226,19 +226,26 @@ export class MapContainer extends Component {
 
           {this.state.showingInfoWindow === true && (
             <InfoWindow
+           
               marker={this.state.activeMarker}
               onCloseClick={this.onInfoWindowClose}
               visible={this.state.showingInfoWindow}
             >
               <div>
-                <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                <StarRatings
+  <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
+               <div >
+                   <StarRatings
                   starRatedColor="yellow"
                   rating={this.state.selectedPlace.rating}
                   starDimension="20px"
                   starSpacing="1px"
                   name="rating"
                 />
+
+                 </div> 
+
+              
+              
                 <img
                   src={this.state.selectedPlace.photo}
                   className="  img-fluid  "
