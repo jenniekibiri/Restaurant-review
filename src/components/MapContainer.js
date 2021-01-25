@@ -26,6 +26,7 @@ export class MapContainer extends Component {
       lng: "",
       name: "",
       address: "",
+      addresses: [],
       newRating: 0,
       dataLoaded: false,
       showMarker: false,
@@ -59,6 +60,27 @@ export class MapContainer extends Component {
     });
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
+  
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    fetch(
+      proxyurl+`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+        },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+       
+        this.setState({
+          addresses: data.results,
+        });
+      });
 
     const { newRestaurants } = this.state;
 
@@ -170,16 +192,22 @@ export class MapContainer extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <input
-                    type="text"
+                  <select
+                    multiple
                     className="form-control"
-                    placeholder="Addresss"
+                    id="address"
                     onChange={this.handleChange}
                     name="address"
-                    value={this.state.address}
-                    id="address"
-                  />
+                  >
+                    {this.state.addresses.map((a, i) => (
+                      <option value={a.formatted_address}>
+                        {" "}
+                        {a.formatted_address}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div className="form-group">
                   <input
                     type="number"
@@ -226,26 +254,22 @@ export class MapContainer extends Component {
 
           {this.state.showingInfoWindow === true && (
             <InfoWindow
-           
               marker={this.state.activeMarker}
               onCloseClick={this.onInfoWindowClose}
               visible={this.state.showingInfoWindow}
             >
               <div>
-  <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-               <div >
-                   <StarRatings
-                  starRatedColor="yellow"
-                  rating={this.state.selectedPlace.rating}
-                  starDimension="20px"
-                  starSpacing="1px"
-                  name="rating"
-                />
+                <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
+                <div>
+                  <StarRatings
+                    starRatedColor="yellow"
+                    rating={this.state.selectedPlace.rating}
+                    starDimension="20px"
+                    starSpacing="1px"
+                    name="rating"
+                  />
+                </div>
 
-                 </div> 
-
-              
-              
                 <img
                   src={this.state.selectedPlace.photo}
                   className="  img-fluid  "
