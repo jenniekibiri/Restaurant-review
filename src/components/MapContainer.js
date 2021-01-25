@@ -27,6 +27,7 @@ export class MapContainer extends Component {
       name: "",
       address: "",
       addresses: [],
+      addressLoaded: false,
       newRating: 0,
       dataLoaded: false,
       showMarker: false,
@@ -60,10 +61,11 @@ export class MapContainer extends Component {
     });
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
-  
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(
-      proxyurl+`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+      proxyurl +
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
       {
         method: "GET",
         headers: {
@@ -76,8 +78,8 @@ export class MapContainer extends Component {
         return response.json();
       })
       .then((data) => {
-       
         this.setState({
+          addressLoaded: true,
           addresses: data.results,
         });
       });
@@ -199,12 +201,18 @@ export class MapContainer extends Component {
                     onChange={this.handleChange}
                     name="address"
                   >
-                    {this.state.addresses.map((a, i) => (
-                      <option value={a.formatted_address}>
-                        {" "}
-                        {a.formatted_address}
-                      </option>
-                    ))}
+                    {this.state.addressLoaded == false ? (
+                      <option> Address Loading ...</option>
+                    ) : (
+                      this.state.addresses.map((a, i) => {
+                        return (
+                          <option value={a.formatted_address}>
+                            {" "}
+                            {a.formatted_address}
+                          </option>
+                        );
+                      })
+                    )}
                   </select>
                 </div>
 
@@ -263,7 +271,7 @@ export class MapContainer extends Component {
                 <div>
                   <StarRatings
                     starRatedColor="yellow"
-                    rating={this.state.selectedPlace.rating}
+                    rating={Number(this.state.selectedPlace.rating)}
                     starDimension="20px"
                     starSpacing="1px"
                     name="rating"
