@@ -195,7 +195,7 @@ export class MapContainer extends Component {
                 </div>
                 <div className="form-group">
                   <select
-                    multiple
+                   
                     className="form-control"
                     id="address"
                     onChange={this.handleChange}
