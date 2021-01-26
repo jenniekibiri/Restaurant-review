@@ -9,6 +9,8 @@ import GoogleApiCard from "./components/GoogleApiCard";
 import CustomData from "./components/CustomData";
 import Filter from "./components/Filter";
 require("dotenv").config();
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,7 @@ export class App extends Component {
     this.getRestaurantId = this.getRestaurantId.bind(this);
     this.ratingChanged = this.ratingChanged.bind(this);
     this.handlePlaces = this.handlePlaces.bind(this);
+    this.getCurrentPosition = this.getCurrentPosition.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
   }
   clearFilter(e) {
@@ -53,7 +56,63 @@ export class App extends Component {
       places,
     });
   }
+ getCurrentPosition(currentPosition) {
+    console.log(currentPosition);
+     fetch(
+      proxyurl +
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
+        },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let results = data.results;
+
+        results.map((result) => {
+          let placeid = result.place_id;
+
+          fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "http://localhost:3000",
+              },
+            }
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              const { ratings } = this.state;
+              ratings.unshift(data.result);
+              this.setState({
+                ratings,
+                dataLoaded: true,
+              });
+            });
+        });
+
+        this.setState({
+          isLoaded: true,
+          place: data.results,
+        });
+      })
+      .catch((err) => console.log(err));
+
+    this.setState({
+      currentPosition,
+    });
+  }
   //handle change
   handleChange(e) {
     this.setState({
@@ -129,7 +188,6 @@ export class App extends Component {
       });
       if (this.state.loaded === false) {
       } else {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(
           proxyurl +
             `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
@@ -234,6 +292,7 @@ export class App extends Component {
               googleRestaurants={this.state.place}
               places={this.state.places}
               handlePlaces={this.handlePlaces}
+              getCurrentPosition={this.getCurrentPosition}
             />
           </div>
 

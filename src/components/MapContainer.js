@@ -10,6 +10,7 @@ const mapStyles = {
   height: "93%",
   width: "93%",
 };
+
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -47,6 +48,21 @@ export class MapContainer extends Component {
     });
   };
 
+   onMarkerDragEnd=(e,marker)=>{
+   console.log(e)
+   var position = marker.getPosition()
+   
+var lat = position.lat()
+var lng = position.lng()
+let draggedPosition={
+  lat,
+  lng
+}
+console.log(draggedPosition)
+this.props.getCurrentPosition(draggedPosition)
+
+
+  }
   onInfoWindowClose = () =>
     this.setState({
       activeMarker: null,
@@ -143,10 +159,13 @@ export class MapContainer extends Component {
           zoom={13}
           initialCenter={this.props.currentPosition}
           onClick={this.onMapClicked}
+          
         >
           <Marker
             name={"current location"}
             title={"current location"}
+             draggable={true}
+             onDragend={this.onMarkerDragEnd}
             // animation={this.props.google.maps.Animation.BOUNCE}
             icon={{
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -206,10 +225,14 @@ export class MapContainer extends Component {
                     ) : (
                       this.state.addresses.map((a, i) => {
                         return (
-                          <option value={a.formatted_address}>
+                         <>
+                         <option>select address</option>
+<option key={i} value={a.formatted_address}>
                             {" "}
                             {a.formatted_address}
                           </option>
+                         </>
+                          
                         );
                       })
                     )}
