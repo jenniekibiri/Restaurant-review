@@ -286,7 +286,7 @@ export class App extends Component {
       <div>
         <Navbar />
         <div className="row">
-          <div className="col-md-8 pr-3 mt-4 pl-3 np-element ">
+          <div className="col-md-8 pr-3 map mt-4 pl-3 np-element ">
             <MapContainer
               currentPosition={this.state.currentPosition}
               googleRestaurants={this.state.place}
@@ -296,8 +296,8 @@ export class App extends Component {
             />
           </div>
 
-          <div className="col-md-4  col-lg-4    np-element ">
-           <div className="row mt-5 "> 
+          <div className="col-md-4  col-lg-4  cards  np-element ">
+           <div className="row  "> 
             <Filter
                 ratingClicked={ratingClicked}
                 ratingChanged={this.ratingChanged}

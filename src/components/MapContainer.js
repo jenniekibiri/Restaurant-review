@@ -7,7 +7,7 @@ import places from "../places.json";
 require("dotenv").config();
 
 const mapStyles = {
-  height: "93%",
+  height: "87%",
   width: "93%",
 };
 
@@ -223,6 +223,7 @@ this.props.getCurrentPosition(draggedPosition)
                     {this.state.addressLoaded == false ? (
                       <option> Address Loading ...</option>
                     ) : (
+       
                       this.state.addresses.map((a, i) => {
                         return (
                          <>

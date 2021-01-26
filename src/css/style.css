@@ -51,7 +51,10 @@ body {
 @media only screen and (max-width: 600px) {
 
   .cards{
-      margin-top: 280px;
+      margin-top: 75px;
+  }
+  .map{
+      height:400px
   }
 }
 .infoWindow{
