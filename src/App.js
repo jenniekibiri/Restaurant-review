@@ -296,18 +296,24 @@ export class App extends Component {
             />
           </div>
 
-          <div className="col-md-4   cards np-element ">
-            <div className="row mt-5 ">
-              {/* card */}
-
-              <Filter
+          <div className="col-md-4  col-lg-4    np-element ">
+           <div className="row mt-5 "> 
+            <Filter
                 ratingClicked={ratingClicked}
                 ratingChanged={this.ratingChanged}
                 clearFilter={this.clearFilter}
               />
+           </div>
+            <div className="row mt-5 ">
+              {/* card */}
+
+
+
+              
               <Element
                 name="test7"
                 id="containerElement"
+                className="col"
                 style={{
                   position: "relative",
                   height: "650px",
