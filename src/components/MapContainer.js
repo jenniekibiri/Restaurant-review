@@ -97,6 +97,7 @@ this.props.getCurrentPosition(draggedPosition)
         this.setState({
           addressLoaded: true,
           addresses: data.results,
+          address: data.results[0].formatted_address,
         });
       });
 
@@ -220,19 +221,18 @@ this.props.getCurrentPosition(draggedPosition)
                     onChange={this.handleChange}
                     name="address"
                   >
+                  <option disabled>Select Address</option>
                     {this.state.addressLoaded == false ? (
                       <option> Address Loading ...</option>
                     ) : (
        
                       this.state.addresses.map((a, i) => {
                         return (
-                         <>
-                         <option>select address</option>
 <option key={i} value={a.formatted_address}>
                             {" "}
                             {a.formatted_address}
                           </option>
-                         </>
+                         
                           
                         );
                       })
@@ -293,13 +293,7 @@ this.props.getCurrentPosition(draggedPosition)
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
                 <div>
-                  <StarRatings
-                    starRatedColor="yellow"
-                    rating={Number(this.state.selectedPlace.rating)}
-                    starDimension="20px"
-                    starSpacing="1px"
-                    name="rating"
-                  />
+                  
                 </div>
 
                 <img

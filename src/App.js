@@ -60,7 +60,7 @@ export class App extends Component {
     console.log(currentPosition);
      fetch(
       proxyurl +
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
       {
         method: "GET",
@@ -75,12 +75,15 @@ export class App extends Component {
       })
       .then((data) => {
         let results = data.results;
+        this.state.ratings=[]
+        //console.log(data)
 
         results.map((result) => {
           let placeid = result.place_id;
-
+          
+//console.log(placeid);
           fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            proxyurl + `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
               headers: {
@@ -91,17 +94,18 @@ export class App extends Component {
           )
             .then((response) => {
               return response.json();
-            })
+            })  
             .then((data) => {
-              const { ratings } = this.state;
-              ratings.unshift(data.result);
+              console.log(data)
+              let { ratings } = this.state;
+              ratings.push(data.result);
               this.setState({
                 ratings,
                 dataLoaded: true,
               });
             });
-        });
-
+        })
+        
         this.setState({
           isLoaded: true,
           place: data.results,
@@ -144,7 +148,7 @@ export class App extends Component {
 
     //add new reviews to google api restaurants
     ratings.map((r) => {
-      if (Number(restaurantId) === r.place_id) {
+      if (restaurantId == r.place_id) {
         if (r.reviews !== undefined) {
           r.reviews.push({ author_name, rating, text });
         } else {
@@ -232,8 +236,7 @@ export class App extends Component {
                   });
                 });
             });
-
-            this.setState({
+          this.setState({
               isLoaded: true,
               place: data.results,
             });
@@ -322,8 +325,9 @@ export class App extends Component {
                   marginBottom: "0px",
                 }}
               >
-                {filteredCoded.map((place) => (
+                {filteredCoded.map((place,i) => (
                   <CustomData
+                 
                     place={place}
                     name={this.state.author_name}
                     rating={this.state.rating}
