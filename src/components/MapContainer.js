@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../css/style.css";
 import uuid from "react-uuid";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import StarRatings from "react-star-ratings";
 import places from "../places.json";
 require("dotenv").config();
 
@@ -38,8 +37,14 @@ export class MapContainer extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
+  handleClose = () => {
+    this.setState({
+      showForm: false,
+    });
+  };
   onMarkerClick = (props, marker) => {
     this.setState({
       selectedPlace: props,
@@ -48,26 +53,29 @@ export class MapContainer extends Component {
     });
   };
 
-   onMarkerDragEnd=(e,marker)=>{
-   console.log(e)
-   var position = marker.getPosition()
-   
-var lat = position.lat()
-var lng = position.lng()
-let draggedPosition={
-  lat,
-  lng
-}
-console.log(draggedPosition)
-this.props.getCurrentPosition(draggedPosition)
+  onMarkerDragEnd = (e, marker) => {
+    console.log(marker);
+    console.log(e);
+    var position = marker.getPosition();
 
-
-  }
+    var lat = position.lat();
+    var lng = position.lng();
+    let draggedPosition = {
+      lat,
+      lng,
+    };
+    console.log(draggedPosition);
+    this.props.getCurrentPosition(draggedPosition);
+  };
   onInfoWindowClose = () =>
     this.setState({
       activeMarker: null,
       showingInfoWindow: false,
     });
+
+  onMapDragEnd = (map, e, marker) => {
+    console.log(e);
+  };
 
   onMapClicked = (props, map, e) => {
     this.setState({
@@ -156,17 +164,18 @@ this.props.getCurrentPosition(draggedPosition)
       >
         <Map
           google={this.props.google}
+          onDragend={this.onMapDragEnd}
           style={mapStyles}
           zoom={13}
+          draggable={true}
           initialCenter={this.props.currentPosition}
           onClick={this.onMapClicked}
-          
         >
           <Marker
             name={"current location"}
             title={"current location"}
-             draggable={true}
-             onDragend={this.onMarkerDragEnd}
+            draggable={true}
+            onDragend={this.onMarkerDragEnd}
             // animation={this.props.google.maps.Animation.BOUNCE}
             icon={{
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -200,11 +209,14 @@ this.props.getCurrentPosition(draggedPosition)
               })}
 
           {this.state.showForm === true ? (
-            <div style={{ position: "relative" }} className="col-md-4 ml-5 ">
-              <form onSubmit={this.handleSubmit} className="np-element mt-2">
-                <div className="form-group">
+            <div style={{ position: "relative" }} className="col-md-4 ml-5 np-element ">
+              
+
+              <form onSubmit={this.handleSubmit} className=" mt-2">
+                 <div className="form-group ">
                   <input
                     type="text"
+                    required
                     className="form-control"
                     placeholder="Restaurant Name"
                     onChange={this.handleChange}
@@ -215,25 +227,21 @@ this.props.getCurrentPosition(draggedPosition)
                 </div>
                 <div className="form-group">
                   <select
-                   
                     className="form-control"
                     id="address"
                     onChange={this.handleChange}
                     name="address"
                   >
-                  <option disabled>Select Address</option>
+                    <option disabled>Select Address</option>
                     {this.state.addressLoaded == false ? (
                       <option> Address Loading ...</option>
                     ) : (
-       
                       this.state.addresses.map((a, i) => {
                         return (
-<option key={i} value={a.formatted_address}>
+                          <option key={i} value={a.formatted_address}>
                             {" "}
                             {a.formatted_address}
                           </option>
-                         
-                          
                         );
                       })
                     )}
@@ -245,6 +253,7 @@ this.props.getCurrentPosition(draggedPosition)
                     type="number"
                     min="1"
                     max="5"
+                    required
                     className="form-control"
                     placeholder="rating"
                     onChange={this.handleChange}
@@ -254,9 +263,22 @@ this.props.getCurrentPosition(draggedPosition)
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
+                <div className="row">
+                  <div className="col-md-6">
+                    <button type="submit" className="np-element send-btn np-shadow">
+                      Submit
+                    </button>
+                  </div>
+                  <div className="col-md-6">
+                    <button
+                      type="submit"
+                      onClick={this.handleClose}
+                      className=" np-element np-shadow close-btn  text-white  "
+                    >
+                      close
+                    </button>
+                  </div>
+                </div>
               </form>
             </div>
           ) : (
@@ -292,9 +314,7 @@ this.props.getCurrentPosition(draggedPosition)
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                <div>
-                  
-                </div>
+                <div></div>
 
                 <img
                   src={this.state.selectedPlace.photo}

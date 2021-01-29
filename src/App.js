@@ -57,7 +57,7 @@ export class App extends Component {
     });
   }
  getCurrentPosition(currentPosition) {
-    console.log(currentPosition);
+   
      fetch(
       proxyurl +
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
@@ -96,7 +96,7 @@ export class App extends Component {
               return response.json();
             })  
             .then((data) => {
-              console.log(data)
+              
               let { ratings } = this.state;
               ratings.push(data.result);
               this.setState({
@@ -138,7 +138,7 @@ export class App extends Component {
 
     //add new reviews to hardcoded restaurants
     places.map((place) => {
-      console.log(place.id);
+     
 
       if (restaurantId == place.id) {
         place.ratings.push({ author_name, rating, text });
@@ -175,7 +175,7 @@ export class App extends Component {
   //get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
-    console.log("clicked id:" + id);
+
     this.setState((state) => ({
       restaurantId: id,
     }));
@@ -327,7 +327,7 @@ export class App extends Component {
               >
                 {filteredCoded.map((place,i) => (
                   <CustomData
-                 
+                 key={i}
                     place={place}
                     name={this.state.author_name}
                     rating={this.state.rating}

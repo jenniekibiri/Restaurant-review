@@ -36,6 +36,11 @@ body {
 .buttonStuff :focus{
     outline: none;
 }
+
+.close-btn{
+    background-color:#c93030;
+    font-size: smaller;
+}
 .logo{
     height: 30px;
 }
