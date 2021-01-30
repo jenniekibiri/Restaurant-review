@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { Element } from "react-scroll";
-import ReactStars from "react-rating-stars-component";
 import MapContainer from "./components/MapContainer";
 import Navbar from "./components/Navbar";
 import "./css/style.css";
-import places from "./places.json";
 import GoogleApiCard from "./components/GoogleApiCard";
 import CustomData from "./components/CustomData";
 import Filter from "./components/Filter";
 require("dotenv").config();
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -56,9 +53,8 @@ export class App extends Component {
       places,
     });
   }
- getCurrentPosition(currentPosition) {
-   
-     fetch(
+  getCurrentPosition(currentPosition) {
+    fetch(
       proxyurl +
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
@@ -75,15 +71,16 @@ export class App extends Component {
       })
       .then((data) => {
         let results = data.results;
-        this.state.ratings=[]
+        this.state.ratings = [];
         //console.log(data)
 
         results.map((result) => {
           let placeid = result.place_id;
-          
-//console.log(placeid);
+
+          //console.log(placeid);
           fetch(
-            proxyurl + `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+            proxyurl +
+              `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
               headers: {
@@ -94,9 +91,8 @@ export class App extends Component {
           )
             .then((response) => {
               return response.json();
-            })  
+            })
             .then((data) => {
-              
               let { ratings } = this.state;
               ratings.push(data.result);
               this.setState({
@@ -104,8 +100,8 @@ export class App extends Component {
                 dataLoaded: true,
               });
             });
-        })
-        
+        });
+
         this.setState({
           isLoaded: true,
           place: data.results,
@@ -138,8 +134,6 @@ export class App extends Component {
 
     //add new reviews to hardcoded restaurants
     places.map((place) => {
-     
-
       if (restaurantId == place.id) {
         place.ratings.push({ author_name, rating, text });
       }
@@ -175,7 +169,6 @@ export class App extends Component {
   //get restaurant id on click
   getRestaurantId(e) {
     let id = e.target.id;
-
     this.setState((state) => ({
       restaurantId: id,
     }));
@@ -236,17 +229,13 @@ export class App extends Component {
                   });
                 });
             });
-          this.setState({
+            this.setState({
               isLoaded: true,
               place: data.results,
             });
           })
           .catch((err) => console.log(err));
       }
-    });
-
-    this.setState({
-      places: places,
     });
   }
 
@@ -279,7 +268,6 @@ export class App extends Component {
       if (ratingClicked === false) {
         filteredCoded.push(p);
       }
-
       if (p.rating == minRating) {
         filteredCoded.push(p);
       }
@@ -300,19 +288,16 @@ export class App extends Component {
           </div>
 
           <div className="col-md-4  col-lg-4  cards  np-element ">
-           <div className="row  "> 
-            <Filter
+            <div className="row  ">
+              <Filter
                 ratingClicked={ratingClicked}
                 ratingChanged={this.ratingChanged}
                 clearFilter={this.clearFilter}
               />
-           </div>
+            </div>
             <div className="row mt-5 ">
               {/* card */}
 
-
-
-              
               <Element
                 name="test7"
                 id="containerElement"
@@ -325,9 +310,9 @@ export class App extends Component {
                   marginBottom: "0px",
                 }}
               >
-                {filteredCoded.map((place,i) => (
+                {filteredCoded.map((place, i) => (
                   <CustomData
-                 key={i}
+                    key={i}
                     place={place}
                     name={this.state.author_name}
                     rating={this.state.rating}

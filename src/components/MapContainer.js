@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../css/style.css";
 import uuid from "react-uuid";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import places from "../places.json";
+import AddRestaurant from "./AddRestaurant";
 require("dotenv").config();
 
 const mapStyles = {
@@ -209,93 +209,26 @@ export class MapContainer extends Component {
               })}
 
           {this.state.showForm === true ? (
-            <div style={{ position: "relative" }} className="col-md-4 ml-5 np-element ">
-              
-
-              <form onSubmit={this.handleSubmit} className=" mt-2">
-                 <div className="form-group ">
-                  <input
-                    type="text"
-                    required
-                    className="form-control"
-                    placeholder="Restaurant Name"
-                    onChange={this.handleChange}
-                    name="name"
-                    value={this.state.name}
-                    id="name"
-                  />
-                </div>
-                <div className="form-group">
-                  <select
-                    className="form-control"
-                    id="address"
-                    onChange={this.handleChange}
-                    name="address"
-                  >
-                    <option disabled>Select Address</option>
-                    {this.state.addressLoaded == false ? (
-                      <option> Address Loading ...</option>
-                    ) : (
-                      this.state.addresses.map((a, i) => {
-                        return (
-                          <option key={i} value={a.formatted_address}>
-                            {" "}
-                            {a.formatted_address}
-                          </option>
-                        );
-                      })
-                    )}
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    required
-                    className="form-control"
-                    placeholder="rating"
-                    onChange={this.handleChange}
-                    name="newRating"
-                    value={this.state.newRating}
-                    id="newRating"
-                  />
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6">
-                    <button type="submit" className="np-element send-btn np-shadow">
-                      Submit
-                    </button>
-                  </div>
-                  <div className="col-md-6">
-                    <button
-                      type="submit"
-                      onClick={this.handleClose}
-                      className=" np-element np-shadow close-btn  text-white  "
-                    >
-                      close
-                    </button>
-                  </div>
-                </div>
-              </form>
+            <div
+              style={{ position: "relative" }}
+              className="col-md-4 ml-5 np-element "
+            >
+              <AddRestaurant
+                name={this.state.name}
+                newRating={this.newRating}
+                address={this.state.address}
+                addresses={this.state.addresses}
+                addressLoaded={this.state.addressLoaded}
+                handleChange={this.handleChange}
+                handleClose={this.handleClose}
+                handleSubmit={this.handleSubmit}
+              />
             </div>
           ) : (
             ""
           )}
 
           {this.props.places.map((place, i) => (
-            <Marker
-              key={i}
-              name={place.restaurantName}
-              rating={place.rating}
-              photo={place.photo}
-              onClick={this.onMarkerClick}
-              position={{ lat: place.lat, lng: place.long }}
-            />
-          ))}
-          {places.map((place, i) => (
             <Marker
               key={i}
               name={place.restaurantName}
