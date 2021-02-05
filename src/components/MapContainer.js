@@ -82,7 +82,7 @@ export class MapContainer extends Component {
     let lng = e.latLng.lng();
 
     fetch(
-      // proxyurl +
+      proxyurl +
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
       {
         method: "GET",

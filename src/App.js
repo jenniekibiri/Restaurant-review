@@ -57,7 +57,7 @@ export class App extends Component {
 
    getCurrentPosition(currentPosition) {
    fetch(
-      // proxyurl +
+      proxyurl +
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
       {
@@ -78,7 +78,7 @@ export class App extends Component {
         results.map((result) => {
           let placeid = result.place_id;
           fetch(
-            // proxyurl +
+            proxyurl +
               `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
@@ -185,7 +185,7 @@ export class App extends Component {
       if (this.state.loaded === false) {
       } else {
        fetch(
-          // proxyurl +
+          proxyurl +
             `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
           {
@@ -206,7 +206,7 @@ export class App extends Component {
               let placeid = result.place_id;
 
               fetch(
-                // proxyurl +
+                proxyurl +
                   `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
                 {
                   method: "GET",
