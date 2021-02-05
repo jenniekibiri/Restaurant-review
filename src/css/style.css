@@ -8,11 +8,7 @@ body {
 .body1 {
     background-image: linear-gradient(-225deg, #CBBACC 0%, #2580B3 100%);
 }
-.cardImage{
-    background-image: url('../assets/71217457.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+
 .row2{
 
     background-color:#e3f2fd;
@@ -33,7 +29,7 @@ body {
 
    
 }
-.buttonStuff :focus{
+.buttonRating :focus{
     outline: none;
 }
 
@@ -46,13 +42,18 @@ body {
 }
 
 .img-fluid{
-    height: 50% !important;
-    width: 50%;
+    height: 60% !important;
+    width: 100%;
+    max-height: 200px;
 }
 .filter{
     cursor: pointer;
 }
 
+.cards{
+    margin-top: 50px !important;
+    padding: 20px;
+}
 @media only screen and (max-width: 600px) {
 
   .cards{
@@ -62,6 +63,12 @@ body {
       height:400px
   }
 }
-.infoWindow{
-    width: 100%;
+.gm-style .gm-style-iw-c{
+    max-width: 250px !important;
+}
+.address{
+    font-weight: bold;
+}
+.rating{
+    color: rgb(230, 173, 19);
 }

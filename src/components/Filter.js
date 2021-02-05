@@ -4,10 +4,10 @@ export class Filter extends Component {
   render() {
     const { ratingClicked, clearFilter, ratingChanged } = this.props;
     return (
-      <div className="buttonStuff ml-3 d-flex justify-content-end align-items-center ">
+      <div className="buttonRating ml-3 d-flex justify-content-end align-items-center ">
         {ratingClicked === true ? (
-          <span className="material-icons filter" onClick={clearFilter}>
-            cached
+          <span className="material-icons text-danger filter" onClick={clearFilter}>
+            clear
           </span>
         ) : (
           <p className="mb-0 mr-1">Filter</p>

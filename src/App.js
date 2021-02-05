@@ -48,14 +48,16 @@ export class App extends Component {
     });
   };
 
+
   handlePlaces(places) {
     this.setState({
       places,
     });
   }
-  getCurrentPosition(currentPosition) {
-    fetch(
-      proxyurl +
+
+   getCurrentPosition(currentPosition) {
+   fetch(
+      // proxyurl +
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
       {
@@ -72,14 +74,11 @@ export class App extends Component {
       .then((data) => {
         let results = data.results;
         this.state.ratings = [];
-        //console.log(data)
 
         results.map((result) => {
           let placeid = result.place_id;
-
-          //console.log(placeid);
           fetch(
-            proxyurl +
+            // proxyurl +
               `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
             {
               method: "GET",
@@ -174,7 +173,7 @@ export class App extends Component {
     }));
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentPosition: {
@@ -185,8 +184,8 @@ export class App extends Component {
       });
       if (this.state.loaded === false) {
       } else {
-        fetch(
-          proxyurl +
+       fetch(
+          // proxyurl +
             `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
           {
@@ -207,7 +206,7 @@ export class App extends Component {
               let placeid = result.place_id;
 
               fetch(
-                proxyurl +
+                // proxyurl +
                   `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=name,rating,photo,vicinity,place_id,reviews,formatted_phone_number&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
                 {
                   method: "GET",
@@ -277,7 +276,7 @@ export class App extends Component {
       <div>
         <Navbar />
         <div className="row">
-          <div className="col-md-8 pr-3 map mt-4 pl-3 np-element ">
+          <div className="col-md-8  map mt-4  np-element ">
             <MapContainer
               currentPosition={this.state.currentPosition}
               googleRestaurants={this.state.place}
@@ -328,7 +327,7 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                  filterGRestaurants.map((p) => {
+                  filterGRestaurants.map((p,i) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {
@@ -340,6 +339,7 @@ export class App extends Component {
 
                     return (
                       <GoogleApiCard
+                        key={i}
                         p={p}
                         place={place}
                         name={this.state.author_name}

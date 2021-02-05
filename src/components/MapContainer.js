@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import "../css/style.css";
 import uuid from "react-uuid";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
+import StarRatings from "react-star-ratings";
 import AddRestaurant from "./AddRestaurant";
+import "../css/style.css";
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
 require("dotenv").config();
 
 const mapStyles = {
   height: "87%",
-  width: "93%",
+  width: "100%",
 };
 
 export class MapContainer extends Component {
@@ -54,17 +56,14 @@ export class MapContainer extends Component {
   };
 
   onMarkerDragEnd = (e, marker) => {
-    console.log(marker);
-    console.log(e);
     var position = marker.getPosition();
-
     var lat = position.lat();
     var lng = position.lng();
     let draggedPosition = {
       lat,
       lng,
     };
-    console.log(draggedPosition);
+
     this.props.getCurrentPosition(draggedPosition);
   };
   onInfoWindowClose = () =>
@@ -72,10 +71,6 @@ export class MapContainer extends Component {
       activeMarker: null,
       showingInfoWindow: false,
     });
-
-  onMapDragEnd = (map, e, marker) => {
-    console.log(e);
-  };
 
   onMapClicked = (props, map, e) => {
     this.setState({
@@ -86,10 +81,9 @@ export class MapContainer extends Component {
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
 
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(
-      proxyurl +
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+      // proxyurl +
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
       {
         method: "GET",
         headers: {
@@ -166,7 +160,7 @@ export class MapContainer extends Component {
           google={this.props.google}
           onDragend={this.onMapDragEnd}
           style={mapStyles}
-          zoom={13}
+          zoom={15}
           draggable={true}
           initialCenter={this.props.currentPosition}
           onClick={this.onMapClicked}
@@ -179,7 +173,7 @@ export class MapContainer extends Component {
             // animation={this.props.google.maps.Animation.BOUNCE}
             icon={{
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-              scaledSize: new window.google.maps.Size(50, 50),
+              scaledSize: new window.google.maps.Size(60, 60),
             }}
             position={this.props.currentPosition}
           />
@@ -201,6 +195,7 @@ export class MapContainer extends Component {
                     key={i}
                     name={p.name}
                     rating={p.rating}
+                     address={p.vicinity}
                     photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
                     position={p.geometry.location}
                     onClick={this.onMarkerClick}
@@ -229,10 +224,13 @@ export class MapContainer extends Component {
           )}
 
           {this.props.places.map((place, i) => (
+           
             <Marker
               key={i}
               name={place.restaurantName}
               rating={place.rating}
+
+              address={place.address}
               photo={place.photo}
               onClick={this.onMarkerClick}
               position={{ lat: place.lat, lng: place.long }}
@@ -241,19 +239,26 @@ export class MapContainer extends Component {
 
           {this.state.showingInfoWindow === true && (
             <InfoWindow
+              className="infowindow"
               marker={this.state.activeMarker}
               onCloseClick={this.onInfoWindowClose}
               visible={this.state.showingInfoWindow}
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                <div></div>
+                  <p className="rating">  {this.state.selectedPlace.rating}</p>
+                  <div className="col-md-12">
+                    <img
+                      src={this.state.selectedPlace.photo}
+                      className="img-fluid  "
+                      alt={this.state.selectedPlace.name}
+                    />
+                  </div>
+                 
+            
+<p className="text-dark address">  {this.state.selectedPlace.address}</p>
 
-                <img
-                  src={this.state.selectedPlace.photo}
-                  className="  img-fluid  "
-                  alt="..."
-                />
+              
               </div>
             </InfoWindow>
           )}
