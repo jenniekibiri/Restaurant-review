@@ -48,15 +48,14 @@ export class App extends Component {
     });
   };
 
-
   handlePlaces(places) {
     this.setState({
       places,
     });
   }
 
-   getCurrentPosition(currentPosition) {
-   fetch(
+  getCurrentPosition(currentPosition) {
+    fetch(
       proxyurl +
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentPosition.lat},${currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
@@ -184,7 +183,7 @@ export class App extends Component {
       });
       if (this.state.loaded === false) {
       } else {
-       fetch(
+        fetch(
           proxyurl +
             `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
@@ -327,7 +326,7 @@ export class App extends Component {
                     <h2 className="spinner">loading ...</h2>
                   </div>
                 ) : (
-                  filterGRestaurants.map((p,i) => {
+                  filterGRestaurants.map((p, i) => {
                     let photoRef = p.photos;
                     var photoLink;
                     if (photoRef !== undefined) {

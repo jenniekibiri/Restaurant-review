@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import uuid from "react-uuid";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import StarRatings from "react-star-ratings";
 import AddRestaurant from "./AddRestaurant";
 import "../css/style.css";
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
@@ -83,7 +82,7 @@ export class MapContainer extends Component {
 
     fetch(
       proxyurl +
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
       {
         method: "GET",
         headers: {
@@ -195,7 +194,7 @@ export class MapContainer extends Component {
                     key={i}
                     name={p.name}
                     rating={p.rating}
-                     address={p.vicinity}
+                    address={p.vicinity}
                     photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
                     position={p.geometry.location}
                     onClick={this.onMarkerClick}
@@ -224,12 +223,10 @@ export class MapContainer extends Component {
           )}
 
           {this.props.places.map((place, i) => (
-           
             <Marker
               key={i}
               name={place.restaurantName}
               rating={place.rating}
-
               address={place.address}
               photo={place.photo}
               onClick={this.onMarkerClick}
@@ -246,19 +243,19 @@ export class MapContainer extends Component {
             >
               <div>
                 <h6 className="text-dark">{this.state.selectedPlace.name}</h6>
-                  <p className="rating">  {this.state.selectedPlace.rating}</p>
-                  <div className="col-md-12">
-                    <img
-                      src={this.state.selectedPlace.photo}
-                      className="img-fluid  "
-                      alt={this.state.selectedPlace.name}
-                    />
-                  </div>
-                 
-            
-<p className="text-dark address">  {this.state.selectedPlace.address}</p>
+                <p className="rating"> {this.state.selectedPlace.rating}</p>
+                <div className="col-md-12">
+                  <img
+                    src={this.state.selectedPlace.photo}
+                    className="img-fluid  "
+                    alt={this.state.selectedPlace.name}
+                  />
+                </div>
 
-              
+                <p className="text-dark address">
+                  {" "}
+                  {this.state.selectedPlace.address}
+                </p>
               </div>
             </InfoWindow>
           )}
