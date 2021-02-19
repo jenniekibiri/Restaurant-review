@@ -1,6 +1,8 @@
 # Restaurant-review
 restaurant review site
-The site temporarily down Google Maps Api expired
+
+The site is temporarily down Google Maps Api expired
+
 
 ![chrome_mBlOrZfHgn.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1612882065547/GMONtIgnt.png)
 
