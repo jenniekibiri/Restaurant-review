@@ -178,7 +178,7 @@ export class MapContainer extends Component {
           />
 
           {this.props.googleRestaurants === undefined
-            ? console.log("loading")
+            ? <p>Loading...</p>
             : this.props.googleRestaurants.map((p, i) => {
                 let photoRef = p.photos;
                 var photoLink;

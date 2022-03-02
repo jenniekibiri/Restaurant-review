@@ -6,7 +6,7 @@ import "./css/style.css";
 import GoogleApiCard from "./components/GoogleApiCard";
 import CustomData from "./components/CustomData";
 import Filter from "./components/Filter";
-import places from './places.json'
+import places from "./places.json"
 require("dotenv").config();
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 export class App extends Component {
@@ -182,9 +182,8 @@ export class App extends Component {
         },
         loaded: true,
       });
-      if (this.state.loaded === false) {
-      } else {
-        fetch(
+      if (this.state.loaded ) {
+             fetch(
           proxyurl +
             `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentPosition.lat},${this.state.currentPosition.lng}&radius=1000&type=restaurant&key=${process.env.REACT_APP_GoogleMapsApiKey}`,
 
