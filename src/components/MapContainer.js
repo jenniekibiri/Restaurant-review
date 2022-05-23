@@ -177,30 +177,32 @@ export class MapContainer extends Component {
             position={this.props.currentPosition}
           />
 
-          {this.props.googleRestaurants === undefined
-            ? <p>Loading...</p>
-            : this.props.googleRestaurants.map((p, i) => {
-                let photoRef = p.photos;
-                var photoLink;
-                if (photoRef !== undefined) {
-                  photoLink = p.photos[0].photo_reference;
-                } else {
-                  photoLink =
-                    "ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
-                }
+          {this.props.googleRestaurants === undefined ? (
+            <p>Loading...</p>
+          ) : (
+            this.props.googleRestaurants.map((p, i) => {
+              let photoRef = p.photos;
+              var photoLink;
+              if (photoRef !== undefined) {
+                photoLink = p.photos[0].photo_reference;
+              } else {
+                photoLink =
+                  "ATtYBwLuLqFtlr_5cBGOaYY76Orfd4fMt5F1if660Ds2dBE3Hxn8ZacI2jhI6V217ZMdf7O5NRcGPi99mGHGbju8dtGsFEvNTIMYP3Ky6Fz9XVQe_advoC68tEDGVuKG1dLs-YgS6H6N9SI4qMgUW3kqZVB-CIdY5kfPrj0IvQHEf5U3IT-C";
+              }
 
-                return (
-                  <Marker
-                    key={i}
-                    name={p.name}
-                    rating={p.rating}
-                    address={p.vicinity}
-                    photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
-                    position={p.geometry.location}
-                    onClick={this.onMarkerClick}
-                  />
-                );
-              })}
+              return (
+                <Marker
+                  key={i}
+                  name={p.name}
+                  rating={p.rating}
+                  address={p.vicinity}
+                  photo={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoLink}&key=${process.env.REACT_APP_GoogleMapsApiKey}`}
+                  position={p.geometry.location}
+                  onClick={this.onMarkerClick}
+                />
+              );
+            })
+          )}
 
           {this.state.showForm === true ? (
             <div

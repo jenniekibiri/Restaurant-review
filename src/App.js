@@ -6,14 +6,14 @@ import "./css/style.css";
 import GoogleApiCard from "./components/GoogleApiCard";
 import CustomData from "./components/CustomData";
 import Filter from "./components/Filter";
-import places from "./places.json"
+// import places from "./places.json"
 require("dotenv").config();
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: places,
+      places: [],
       place: [],
       ratings: [],
       author_name: "",
